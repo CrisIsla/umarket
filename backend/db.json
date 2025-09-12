@@ -1,0 +1,32 @@
+{   
+    "user": [
+        {
+            "id": "1",
+            "name": "vendedor 1",
+            "contact": {
+                "whatsapp": "+569 12345678",
+                "email":  "vendedor1@corre.com"
+                }
+        }
+    ],
+    "products": [
+        {
+            "id": "1",
+            "title": "producto prueba",
+            "date": "fecha prueba",
+            "description": "Descripción prueba",
+            "seller": "1",
+            "photos": "aquí deberían estar las fotos",
+            "condition": "new"
+        },
+        {
+            "id": "2",
+            "title": "producto prueba usado",
+            "date": "fecha prueba",
+            "description": "Descripción prueba",
+            "seller": "1",
+            "photos": "aquí deberían estar las fotos",
+            "condition": "used"
+        }
+    ]
+}
