@@ -1,5 +1,5 @@
 export interface User {
-    readonly id: number;
+    readonly id: string;
     name: string;
 }
 

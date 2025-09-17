@@ -1,7 +1,7 @@
 import type { User } from "./user"
 
 export interface Product{
-    readonly id : number,
+    readonly id : string,
     title: string,
     date: string | Date,
     description: string,
