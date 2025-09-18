@@ -6,6 +6,6 @@ export interface Product{
     date: string | Date,
     description: string,
     seller: User['id'],
-    photos: string | [],
+    photos: string[] | [],
     condition: "new" | "used"
 }

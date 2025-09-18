@@ -3,9 +3,9 @@ import { connectingWithServer, type ApiResponse } from "./genericService";
 
 const SUCCESSFULL_MESSAGES = {
     CREATE: 'Product has been create successfully',
-    GET_ALL: 'Request has been successfull', 
-    GET: 'Request has been successfull',
-    DELETE: 'Request has been successfull',
+    GET_ALL: 'Request has been successful', 
+    GET: 'Request has been successful',
+    DELETE: 'Request has been successful',
 
 };
 
