@@ -27,7 +27,7 @@ export function createProduct(product: Omit<Product, 'id'>){
     })
 }
 
-export function getProducts(page: number, limit: number): Promise<ApiResponse<Product[]>>{
+export function getProducts(page?: number, limit?: number): Promise<ApiResponse<Product[]>>{
     return connectingWithServer<void,Product[]>({
         method: 'get',
         url: '/products',
