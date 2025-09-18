@@ -16,7 +16,7 @@
             "date": "fecha prueba",
             "description": "Descripción prueba",
             "seller": "1",
-            "photos": "aquí deberían estar las fotos",
+            "photos": ["foto1.jpg", "foto2.jpg"],
             "condition": "new"
         },
         {
@@ -25,7 +25,7 @@
             "date": "fecha prueba",
             "description": "Descripción prueba",
             "seller": "1",
-            "photos": "aquí deberían estar las fotos",
+            "photos": ["foto3.jpg"],
             "condition": "used"
         }
     ]
