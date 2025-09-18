@@ -9,7 +9,8 @@ interface ProductFormData {
   stock: string;
   tags: string;
   description: string;
-  [key: string]: string;
+  images: string[];
+  [key: string]: string | string[] | null;
 }
 
 const initialFormData: ProductFormData = {
@@ -20,6 +21,7 @@ const initialFormData: ProductFormData = {
   stock: "",
   tags: "",
   description: "",
+  images: [],
 };
 
 const categories = [
@@ -53,7 +55,6 @@ export const ProductForm: React.FC = () => {
         .filter(Boolean),
     };
 
-    // para luego enviar datos al endpoint
     console.log("Enviando datos:", dataToSend);
 
     onResetForm();
@@ -61,100 +62,111 @@ export const ProductForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name"></label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Título"
-          value={formState.name}
-          onChange={onInputChange}
-        />
-      </div>
+      <section>
+        <h1>Publicar un producto</h1>
+      </section>
+      <section>
+        <p>Obligatorio</p>
+        <div>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Título"
+            value={formState.name}
+            onChange={onInputChange}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="cost"></label>
-        <input
-          type="number"
-          id="cost"
-          name="cost"
-          placeholder="Precio"
-          value={formState.cost}
-          onChange={onInputChange}
-        />
-      </div>
+        <div>
+          <input
+            type="number"
+            id="cost"
+            name="cost"
+            placeholder="Precio"
+            value={formState.cost}
+            onChange={onInputChange}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="category"></label>
-        <select
-          id="category"
-          name="category"
-          value={formState.category}
-          onChange={onInputChange}
-        >
-          <option value="">Categoría</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+          <select
+            id="category"
+            name="category"
+            value={formState.category}
+            onChange={onInputChange}
+          >
+            <option value="">Categoría</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label htmlFor="status"></label>
-        <select
-          id="status"
-          name="status"
-          value={formState.status}
-          onChange={onInputChange}
-        >
-          <option value="">Estado</option>
-          {statuses.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+          <select
+            id="status"
+            name="status"
+            value={formState.status}
+            onChange={onInputChange}
+          >
+            <option value="">Estado</option>
+            {statuses.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label htmlFor="stock"></label>
-        <input
-          type="number"
-          id="stock"
-          name="stock"
-          placeholder="Stock"
-          value={formState.stock}
-          onChange={onInputChange}
-        />
-      </div>
+        <div>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            placeholder="Seleccionar fotos"
+            multiple
+            onChange={onInputChange}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="tags"></label>
-        <input
-          type="text"
-          id="tags"
-          name="tags"
-          placeholder="Tags"
-          value={formState.tags}
-          onChange={onInputChange}
-        />
-      </div>
+        <div>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Descripción"
+            value={formState.description}
+            onChange={onInputChange}
+          />
+        </div>
+      </section>
 
-      <div>
-        <label htmlFor="description"></label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Descripción"
-          value={formState.description}
-          onChange={onInputChange}
-        />
-      </div>
+      <section>
+        <p>Opcional</p>
+        <div>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            placeholder="Stock"
+            value={formState.stock}
+            onChange={onInputChange}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            placeholder="tag1, tag2, tag3"
+            value={formState.tags}
+            onChange={onInputChange}
+          />
+        </div>
+      </section>
 
-      {/* Este boton debería ser el componente button */}
       <button type="submit">Publicar</button>
     </form>
   );
