@@ -1,4 +1,5 @@
 import { useForm } from "@/hooks/useForm";
+import { Button } from "./Button";
 
 interface ProductFormData {
   name: string;
@@ -38,14 +39,8 @@ const statuses = [
 ];
 
 export const ProductForm: React.FC = () => {
-  const {
-    formState,
-    onInputChange,
-    onResetForm,
-    onImageChange,
-    imageCount,
-    onRemoveImage,
-  } = useForm<ProductFormData>(initialFormData);
+  const { formState, onInputChange, onImageChange, imageCount, onRemoveImage } =
+    useForm<ProductFormData>(initialFormData);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +57,6 @@ export const ProductForm: React.FC = () => {
 
     // para luego enviar datos al endpoint
     console.log("Enviando datos:", dataToSend);
-    onResetForm();
   };
 
   return (
@@ -71,7 +65,7 @@ export const ProductForm: React.FC = () => {
         <h1 className="text-3xl font-bold text-gray-900 mb-2 justify-center flex">
           Artículo en venta
         </h1>
-        <p className="text-gray-600 mb-8 justify-center flex">
+        <p className="text-gray-600 mb-7 justify-center flex">
           Completa la información de tu producto
         </p>
 
@@ -172,7 +166,7 @@ export const ProductForm: React.FC = () => {
                     name="status"
                     value={formState.status}
                     onChange={onInputChange}
-                    className="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                    className="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
                     required
                   >
                     <option value="">Selecciona el estado</option>
@@ -271,7 +265,7 @@ export const ProductForm: React.FC = () => {
                 >
                   <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
                     <svg
-                      className="w-6 h-6 text-blue-500"
+                      className="w-6 h-6 text-gray-500"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -309,10 +303,10 @@ export const ProductForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => onRemoveImage(idx)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700"
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-700"
                         title="Eliminar"
                       >
-                        x
+                        <span className="mb-1">x</span>
                       </button>
                     </div>
                   ))}
@@ -320,14 +314,13 @@ export const ProductForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Este boton debería ser el componente button */}
           <div className="md:col-span-2 flex justify-end">
-            <button
+            <Button
               type="submit"
-              className="px-8 py-3 bg-[#031e3c] text-white rounded-lg hover:bg-blue-800 transition-colors ease-in-out flex items-center cursor-pointer"
+              className="px-8 py-3 hover:bg-blue-800/80 transition-colors duration-500"
             >
               <span>Publicar</span>
-            </button>
+            </Button>
           </div>
         </form>
       </div>
