@@ -10,7 +10,9 @@ interface UseFormReturn<T> {
   onResetForm: () => void;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   imageCount: number;
+  onRemoveImage: (index: number) => void;
 }
+
 
 export function useForm<T extends Record<string, unknown>>(
   initialForm: T
@@ -34,14 +36,29 @@ export function useForm<T extends Record<string, unknown>>(
     if (e.target.files) {
       const files = Array.from(e.target.files);
       if (imageCount + files.length <= 5) {
+        const currentImages = (formState as any).images || [];
+        const updatedImages = [...currentImages, ...files];
+
         setFormState({
           ...formState,
-          images: files,
+          images: updatedImages,
         });
-        setImageCount(imageCount + files.length);
+        setImageCount(updatedImages.length);
       }
     }
   };
+
+  const onRemoveImage = (index: number) => {
+    if (formState.images && Array.isArray(formState.images)) {
+      const images = [...formState.images];
+      images.splice(index, 1);
+      setFormState({
+        ...formState,
+        images,
+      });
+      setImageCount(images.length);
+    }
+  }
 
   const onResetForm = () => {
     setFormState(initialForm);
@@ -53,6 +70,7 @@ export function useForm<T extends Record<string, unknown>>(
     onInputChange,
     onResetForm,
     onImageChange,
+    onRemoveImage,
     imageCount,
   };
 }
