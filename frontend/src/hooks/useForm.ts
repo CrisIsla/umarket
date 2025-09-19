@@ -8,30 +8,51 @@ interface UseFormReturn<T> {
     >
   ) => void;
   onResetForm: () => void;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  imageCount: number;
 }
 
 export function useForm<T extends Record<string, unknown>>(
   initialForm: T
 ): UseFormReturn<T> {
   const [formState, setFormState] = useState<T>(initialForm);
+  const [imageCount, setImageCount] = useState(0);
 
   const onInputChange = (
-    event: React.ChangeEvent<
+    e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = event.target;
-    setFormState((prevState) => ({
-      ...prevState,
+    const { name, value } = e.target;
+    setFormState({
+      ...formState,
       [name]: value,
-    }));
+    });
   };
 
-  const onResetForm = () => setFormState(initialForm);
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      if (imageCount + files.length <= 5) {
+        setFormState({
+          ...formState,
+          images: files,
+        });
+        setImageCount(imageCount + files.length);
+      }
+    }
+  };
+
+  const onResetForm = () => {
+    setFormState(initialForm);
+    setImageCount(0);
+  };
 
   return {
     formState,
     onInputChange,
     onResetForm,
+    onImageChange,
+    imageCount,
   };
 }
