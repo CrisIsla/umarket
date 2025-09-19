@@ -13,7 +13,6 @@ interface UseFormReturn<T> {
   onRemoveImage: (index: number) => void;
 }
 
-
 export function useForm<T extends Record<string, unknown>>(
   initialForm: T
 ): UseFormReturn<T> {
@@ -58,7 +57,7 @@ export function useForm<T extends Record<string, unknown>>(
       });
       setImageCount(images.length);
     }
-  }
+  };
 
   const onResetForm = () => {
     setFormState(initialForm);
