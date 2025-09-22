@@ -86,6 +86,11 @@ const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
           </button>
         )}
         <p className="text-sm">Vendido por: {product.seller}</p>
+        {/*PLACEHOLDER*/}
+        <div className="flex justify-evenly">
+          <button>Comprar</button>
+          <button>Agregar al carrito</button>
+        </div>
       </div>
     </div>
   );
