@@ -1,8 +1,20 @@
 import { ShoppingCart, Search } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-export default function Header() {
+type HeaderProps = {
+  onSearch: (query: string) => void;
+};
+
+export default function Header({ onSearch }: HeaderProps) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    onSearch(e.target.value);
+  };
+
   return (
     <header className="bg-[#031E3C] fixed top-0 left-0 w-screen text-white flex items-center justify-evenly shadow-md">
       {/* Logo */}
@@ -17,8 +29,13 @@ export default function Header() {
             type="text"
             placeholder="Buscar..."
             className="w-full px-4 py-2 rounded-full text-black focus:outline-none"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
-          <button type="button" className="outline-none focus:outline-none absolute right-1 text-gray-500 p-0">
+          <button type="button" 
+          style={{ outline: "none", boxShadow: "none" }}
+          onClick={() => {if (searchTerm.trim() !== "") onSearch(searchTerm); }}
+          className="outline-none focus:outline-none hover:outline-none active:outline-none border-none absolute right-1 text-gray-500 p-0">
             <Search className="h-5 w-5" />
           </button>
         </div>
