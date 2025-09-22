@@ -1,6 +1,7 @@
 import type { Product } from "@/interfaces/product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import defaultProductPhoto from "/vite.svg";
+import axios from "axios";
 
 interface PhotosComponentProps {
   photos: string[];
@@ -49,14 +50,29 @@ const PhotosComponent = ({ photos }: PhotosComponentProps) => {
 };
 
 interface ProductDetailComponentProps {
-  product: Product;
+  productId: string;
 }
 
-const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
+const ProductDetailComponent = ({ productId }: ProductDetailComponentProps) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/products/${productId}`)
+      .then((response) => setProduct(response.data));
+  }, []);
+  if (product === null) {
+    return <h1>Cargando detalle de producto...</h1>;
+  }
+  const [sellerName, setSellerName] = useState<string>("");
   const [showMore, setShowMore] = useState<boolean>(false);
   const productDate: Date = new Date(product.date);
   const descriptionLength = product.description.length;
   const maximumDescriptonLength = 550;
+  useEffect(() => {
+    axios
+      .get(`https://localhost:3000/user/`)
+      .then((response) => setSellerName(response.data.name));
+  }, []);
   return (
     <div className="flex flex-col justify-evenly md:flex-row p-4 mx-auto">
       <div className="w-full md:w-1/2">
@@ -85,7 +101,7 @@ const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
             {showMore ? "Mostrar menos" : "Mostrar más"}
           </button>
         )}
-        <p className="text-sm">Vendido por: {product.seller}</p>
+        <p className="text-sm">Vendido por: {sellerName}</p>
         {/*PLACEHOLDER*/}
         <div className="flex justify-evenly">
           <button>Comprar</button>
