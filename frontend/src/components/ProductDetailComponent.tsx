@@ -7,6 +7,7 @@ interface PhotosComponentProps {
 }
 
 const PhotosComponent = ({ photos }: PhotosComponentProps) => {
+  const [currentPhoto, setCurrentPhoto] = useState<number>(0);
   const len = photos.length;
   if (len === 0) {
     return (
@@ -16,6 +17,30 @@ const PhotosComponent = ({ photos }: PhotosComponentProps) => {
       </div>
     );
   }
+  return (
+    <div className="w-full max-w-[500px] mx-auto">
+      <div className="w-full h-full object-cover">
+        <img
+          src={photos[currentPhoto]}
+          className="w-full h-full object-cover"
+        ></img>
+      </div>
+      {len > 1 && (
+        <div className="flex justify-evenly mt-4">
+          {photos.map((photo, index) => {
+            return (
+              <img
+                key={index}
+                src={photo}
+                onClick={() => setCurrentPhoto(index)}
+                className={`w-20 h-20 object-cover cursor-pointer border-2 ${index === currentPhoto ? "border-black" : "border-transparent hover:border-gray-300"}`}
+              ></img>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 };
 
 interface ProductDetailComponentProps {
