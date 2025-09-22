@@ -11,9 +11,14 @@ const PhotosComponent = ({ photos }: PhotosComponentProps) => {
   const len = photos.length;
   if (len === 0) {
     return (
-      <div>
-        <img src={defaultProductPhoto}></img>
-        <h3>No se han proporcionado imagenes para este producto</h3>
+      <div className="w-full max-w-[500px] mx-auto">
+        <div className="max-w-[500px]">
+          <img
+            src={defaultProductPhoto}
+            className="w-full h-full object-cover"
+          ></img>
+          <h3>No se han proporcionado imagenes para este producto</h3>
+        </div>
       </div>
     );
   }
@@ -26,7 +31,7 @@ const PhotosComponent = ({ photos }: PhotosComponentProps) => {
         ></img>
       </div>
       {len > 1 && (
-        <div className="flex justify-evenly mt-4">
+        <div className="flex justify-evenly">
           {photos.map((photo, index) => {
             return (
               <img
@@ -51,32 +56,38 @@ const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const productDate: Date = new Date(product.date);
   const descriptionLength = product.description.length;
-  const maximumDescriptonLength = 144;
+  const maximumDescriptonLength = 550;
   return (
-    <>
-      <PhotosComponent photos={product.photos} />
-      <h1>{product.title}</h1>
-      <div>
-        <p>
-          Publicado el{" "}
-          {productDate.toLocaleDateString("es-CL").replace(/-/gi, "/")}
-        </p>
-        <p>{product.condition}</p>
+    <div className="flex flex-col justify-evenly md:flex-row p-4 mx-auto">
+      <div className="w-full md:w-1/2">
+        <PhotosComponent photos={product.photos} />
       </div>
-      <h1>${product.price}</h1>
-      <h3>
-        {descriptionLength > maximumDescriptonLength && !showMore
-          ? product.description.slice(0, 144) + "..."
-          : product.description}
-      </h3>
-      {descriptionLength > maximumDescriptonLength && (
-        /*PLACEHOLDER*/
-        <button onClick={() => setShowMore(!showMore)}>
-          {showMore ? "Mostrar menos" : "Mostrar más"}
-        </button>
-      )}
-      <p>Vendido por: {product.seller}</p>
-    </>
+      <div className="w-full md:w-1/2 flex flex-col gap-4 m-4">
+        <h1 className="text-2xl font-bold">{product.title}</h1>
+        <div className="text-sm space-y-1 flex gap-4 items-center">
+          <p>
+            Publicado el{" "}
+            {productDate.toLocaleDateString("es-CL").replace(/-/gi, "/")}
+          </p>
+          <p className="border rounded-md border-gray bg-gray-400 px-1">
+            {product.condition}
+          </p>
+        </div>
+        <h1 className="text-3xl font-semibold">${product.price}</h1>
+        <h3>
+          {descriptionLength > maximumDescriptonLength && !showMore
+            ? product.description.slice(0, maximumDescriptonLength) + "..."
+            : product.description}
+        </h3>
+        {descriptionLength > maximumDescriptonLength && (
+          /*PLACEHOLDER*/
+          <button onClick={() => setShowMore(!showMore)}>
+            {showMore ? "Mostrar menos" : "Mostrar más"}
+          </button>
+        )}
+        <p className="text-sm">Vendido por: {product.seller}</p>
+      </div>
+    </div>
   );
 };
 
