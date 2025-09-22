@@ -25,6 +25,8 @@ interface ProductDetailComponentProps {
 const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const productDate: Date = new Date(product.date);
+  const descriptionLength = product.description.length;
+  const maximumDescriptonLength = 144;
   return (
     <>
       <PhotosComponent photos={product.photos} />
@@ -37,7 +39,17 @@ const ProductDetailComponent = ({ product }: ProductDetailComponentProps) => {
         <p>{product.condition}</p>
       </div>
       <h1>${product.price}</h1>
-      <h3>{product.description}</h3>
+      <h3>
+        {descriptionLength > maximumDescriptonLength && !showMore
+          ? product.description.slice(0, 144) + "..."
+          : product.description}
+      </h3>
+      {descriptionLength > maximumDescriptonLength && (
+        /*PLACEHOLDER*/
+        <button onClick={() => setShowMore(!showMore)}>
+          {showMore ? "Mostrar menos" : "Mostrar más"}
+        </button>
+      )}
       <p>Vendido por: {product.seller}</p>
     </>
   );
