@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { getProducts } from "../services/productServices.ts";
 import type { Product } from "../interfaces/product.ts";
 import { LayoutGridIcon, List } from "lucide-react";
+import ProductCardGrid from "@/components/ProductCardGrid.tsx";
 
 export default function Home() {
   // States
@@ -251,8 +252,7 @@ export default function Home() {
                   key={p.id}
                   className="bg-gray-100 rounded-md my-6 flex items-center justify-center"
                 >
-                  {/* Componente grid */}
-                  {p.title}
+                  <ProductCardGrid product={p} />
                 </div>
               )
             )}
