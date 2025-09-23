@@ -2,12 +2,14 @@ import { useState, useEffect, use } from "react";
 import Header from "../components/Header";
 import { getProducts } from "../services/productServices.ts";
 import type { Product } from "../interfaces/product.ts";
+import ProductCardGrid from "@/components/ProductCardGrid.tsx";
 
 export default function Home() {
   // States
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [showProducts, setShowProducts] = useState<"grid"|"list">("list");
   // States for filters
   const [activeCondition, setActiveCondition] = useState<string | null>(null);
   //   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -139,20 +141,22 @@ export default function Home() {
               <option>Precio: menor a mayor</option>
               <option>Precio: mayor a menor</option>
             </select>
-            <button className="p-2 border rounded">🔲</button>
-            <button className="p-2 border rounded">☰</button>
+            <button className="p-2 border rounded" onClick={() => setShowProducts("grid")}>🔲</button>
+            <button className="p-2 border rounded" onClick={() => setShowProducts("list")}>☰</button>
           </div>
           {error && <p className="text-red-600">{error}</p>}
-          <div>
+          <div className={showProducts === "grid" ? "p-4 grid grid-cols-3 gap-4 auto-rows-fr" : ""}>
             {filteredProducts.map((p) => (
-              <div
-                key={p.id}
-                className="bg-gray-100 rounded-md my-6 h-[180px] flex items-center justify-center"
-              >
-                <span className="text-gray-400">Componente Producto</span>
-                {/* <ProductCard product={p} /> */}
-                <div className="">{p.title}</div>
-              </div>
+              showProducts === 'list' ? (
+                <div
+                  key={p.id}
+                  className="bg-gray-100 flex items-center justify-center rounded-md my-6 h-[180px]"
+                >
+                  <span className="text-gray-400">Componente Producto</span>
+                  {/* <ProductCard product={p} /> */}
+                  <div className="">{p.title}</div>
+                </div>
+                ) : <ProductCardGrid key={p.id} product={p}/>
             ))}
           </div>
         </div>
