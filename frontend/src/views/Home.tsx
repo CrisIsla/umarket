@@ -3,24 +3,6 @@ import Header from "../components/Header";
 import { getProducts } from "../services/productServices.ts";
 import type { Product } from "../interfaces/product.ts";
 
-function ProductPlaceholder() {
-  return (
-    <div
-      style={{
-        background: "#eee",
-        borderRadius: "10px",
-        marginBottom: "24px",
-        height: "180px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <span style={{ color: "#999" }}>[Componente Producto]</span>
-    </div>
-  );
-}
-
 export default function Home() {
   // States
   const [products, setProducts] = useState<Product[]>([]);
