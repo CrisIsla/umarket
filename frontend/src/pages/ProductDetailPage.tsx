@@ -13,7 +13,7 @@ export const ProductDetailPage = () => {
           UMarket
         </h1>
       </nav>
-      <div className="min-h-screen px-7 py-0.5 bg-gray-400/50">
+      <div className="min-h-screen px-7 py-4 bg-gray-400/50">
         <ProductDetailComponent id={id} />
       </div>
     </div>

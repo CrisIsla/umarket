@@ -1,12 +1,14 @@
 import type { Product } from "@/interfaces/product";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { getProductById } from "../services/productServices";
 import { getUserById } from "../services/userServices";
 import PhotosGalleryComponent from "./PhotosGalleryComponent";
 
-const ProductDetailComponent = () => {
-  const { id } = useParams();
+interface ProductDetailComponentProps {
+  id: string;
+}
+
+const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [sellerName, setSellerName] = useState<string>("");
   const [showMore, setShowMore] = useState<boolean>(false);
