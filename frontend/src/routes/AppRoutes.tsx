@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router";
+import Home from "../views/Home.tsx";
+
 export function AppRoutes(){
   return (
     <Routes>
         <Route
             index
-            element={<h1>Home</h1>}
+            element={<Home />}
         />
         <Route
             path='/products/:id'
