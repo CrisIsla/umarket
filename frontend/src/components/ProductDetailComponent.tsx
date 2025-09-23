@@ -9,6 +9,7 @@ const ProductDetailComponent = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [sellerName, setSellerName] = useState<string>("");
+  const [showMore, setShowMore] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) throw new Error("parameter id was not provided");
@@ -22,9 +23,9 @@ const ProductDetailComponent = () => {
 
   useEffect(() => {
     if (!product) return;
-    getUserById({ id: product.id }).then((response) => {
+    getUserById({ id: product.seller }).then((response) => {
       if (response.data === undefined) {
-        throw new Error(`Error getting product with id ${id}`);
+        throw new Error(`Error getting seller with id ${id}`);
       }
       setSellerName(response.data.name);
     });
@@ -32,7 +33,6 @@ const ProductDetailComponent = () => {
 
   if (product === null) return <h1>Cargando detalle de producto...</h1>;
 
-  const [showMore, setShowMore] = useState<boolean>(false);
   const productDate: Date = new Date(product.date);
   const descriptionLength = product.description.length;
   const maximumDescriptonLength = 550;
