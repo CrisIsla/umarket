@@ -12,7 +12,13 @@ export default function Header({ onSearch }: HeaderProps) {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    onSearch(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchTerm.trim() !== "") {
+      onSearch(searchTerm);
+      setSearchTerm("");
+    }
   };
 
   return (
@@ -31,11 +37,12 @@ export default function Header({ onSearch }: HeaderProps) {
             className="w-full px-4 py-2 rounded-full text-black focus:outline-none"
             value={searchTerm}
             onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
           />
           <button type="button" 
           style={{ outline: "none", boxShadow: "none" }}
           onClick={() => {if (searchTerm.trim() !== "") onSearch(searchTerm); }}
-          className="outline-none focus:outline-none hover:outline-none active:outline-none border-none absolute right-1 text-gray-500 p-0">
+          className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
             <Search className="h-5 w-5" />
           </button>
         </div>
