@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getProductById } from "../services/productServices";
 import { getUserById } from "../services/userServices";
 import PhotosGalleryComponent from "./PhotosGalleryComponent";
+import { Button } from "./Button";
 
 interface ProductDetailComponentProps {
   id: string;
@@ -62,15 +63,15 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
         </h3>
         {descriptionLength > maximumDescriptonLength && (
           /*PLACEHOLDER*/
-          <button onClick={() => setShowMore(!showMore)}>
+          <Button className="px-8 py-3" onClick={() => setShowMore(!showMore)}>
             {showMore ? "Mostrar menos" : "Mostrar más"}
-          </button>
+          </Button>
         )}
         <p className="text-sm text-gray-600">Vendido por: {sellerName}</p>
         {/*PLACEHOLDER*/}
         <div className="flex gap-4 pt-4">
-          <button>Comprar</button>
-          <button>Agregar al carrito</button>
+          <Button className="px-8 py-3">Comprar</Button>
+          <Button className="px-8 py-3">Agregar al carrito</Button>
         </div>
       </div>
     </div>
