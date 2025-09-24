@@ -46,13 +46,13 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
       </div>
       <div className="space-y-6 text-gray-800">
         <h1 className="text-2xl md:text-3xl font-semibold">{product.title}</h1>
-        <div>
+        <div className="flex justify-start gap-4">
           <p className="flex items-center gap-4 text-sm text-gray-500">
             Publicado el{" "}
             {productDate.toLocaleDateString("es-CL").replace(/-/gi, "/")}
           </p>
-          <p className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-xs uppercase">
-            {product.condition}
+          <p className="content-center bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-xs">
+            {product.condition === "new" ? "Nuevo" : "Usado"}
           </p>
         </div>
         <h1 className="text-3xl font-bold text-gray-900">${product.price}</h1>
