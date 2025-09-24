@@ -60,6 +60,13 @@ export default function Home() {
         setError("Error fetching products");
       });
   }, []);
+  useEffect(() => {
+    // Limpia los filtros y búsqueda al montar Home
+    setActiveCondition(null);
+    setActiveCategory(null);
+    setActiveTags([]);
+    setSearchQuery("");
+  }, []);
 
   // Compute counts for filters
   const conditionCounts = filteredProducts.reduce((acc, product) => {
@@ -190,6 +197,7 @@ export default function Home() {
               setFilteredProducts(products);
               setActiveCategory(null);
               setActiveTags([]);
+              setSearchQuery("");
             }}
             className="mb-4 text-blue-600 underline"
           >
