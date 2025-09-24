@@ -4,6 +4,7 @@ import { getProducts } from "../services/productServices.ts";
 import type { Product } from "../interfaces/product.ts";
 import { LayoutGridIcon, List } from "lucide-react";
 import ProductCardGrid from "@/components/ProductCardGrid.tsx";
+import ProductComponent from "@/components/ProductComponent.tsx";
 
 export default function Home() {
   // States
@@ -23,7 +24,7 @@ export default function Home() {
     switch (criteria) {
       case "recientes":
         return [...productsToSort].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
       //   case "precio-asc":
       //     return [...productsToSort].sort((a, b) => a.price - b.price);
@@ -36,12 +37,12 @@ export default function Home() {
   const sortedProducts = sortProducts(filteredProducts, sortOption);
 
   // const toggleTag = (tag: string) => {
-    //   setActiveTags(prevTags =>
-    //     prevTags.includes(tag)
-    //       ? prevTags.filter(t => t !== tag)
-    //       : [...prevTags, tag]
-    //   );
-    // };
+  //   setActiveTags(prevTags =>
+  //     prevTags.includes(tag)
+  //       ? prevTags.filter(t => t !== tag)
+  //       : [...prevTags, tag]
+  //   );
+  // };
 
   // Initial fetch of products
   useEffect(() => {
@@ -60,12 +61,15 @@ export default function Home() {
   }, []);
 
   // Compute counts for filters
-  const conditionCounts = products.reduce((acc, product) => {
-    if (product.condition) {
-      acc[product.condition] = (acc[product.condition] || 0) + 1;
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  const conditionCounts = products.reduce(
+    (acc, product) => {
+      if (product.condition) {
+        acc[product.condition] = (acc[product.condition] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   // const categoryCounts = products.reduce((acc, product) => {
   //   if (product.category) {
@@ -113,7 +117,7 @@ export default function Home() {
       return;
     }
     const filtered = products.filter((product) =>
-      product.title.toLowerCase().includes(query.toLowerCase())
+      product.title.toLowerCase().includes(query.toLowerCase()),
     );
     setFilteredProducts(filtered);
   };
@@ -141,14 +145,18 @@ export default function Home() {
             count > 0 ? (
               <div
                 key={condition}
-                onClick={() => setActiveCondition(condition === activeCondition ? null : condition)}
+                onClick={() =>
+                  setActiveCondition(
+                    condition === activeCondition ? null : condition,
+                  )
+                }
                 className={`cursor-pointer ${
                   activeCondition === condition ? "font-bold" : ""
                 }`}
               >
                 {filterLabels[condition] || condition} ({count})
               </div>
-            ) : null
+            ) : null,
           )}
           <br />
           <strong>Categorías</strong>
@@ -236,16 +244,9 @@ export default function Home() {
               viewMode === "list" ? (
                 <div
                   key={p.id}
-                  className="bg-gray-100 rounded-md my-6 flex items-center justify-center"
+                  className="bg-gray-100 rounded-md my-2 flex items-center justify-center"
                 >
-                  <span className="text-gray-400">Componente Producto</span>
-                  {/* Componente list */}
-                  <div className="">
-                    {p.title} -{" "}
-                    {p.date instanceof Date
-                      ? p.date.toLocaleDateString()
-                      : p.date}
-                  </div>
+                  <ProductComponent product={p} />
                 </div>
               ) : (
                 <div
@@ -254,7 +255,7 @@ export default function Home() {
                 >
                   <ProductCardGrid product={p} />
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
