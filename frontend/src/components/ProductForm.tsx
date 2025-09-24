@@ -1,11 +1,12 @@
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
+import { createProduct } from "@/services/productServices";
 
 interface ProductFormData {
   name: string;
   cost: string;
   category: string;
-  status: string;
+  status: "new" | "used" | "";
   stock: string;
   tags: string;
   description: string;
@@ -39,7 +40,7 @@ const statuses = [
 ];
 
 export const ProductForm: React.FC = () => {
-  const { formState, onInputChange, onImageChange, imageCount, onRemoveImage } =
+  const { formState, onInputChange, onImageChange, imageCount, onRemoveImage, onResetForm } =
     useForm<ProductFormData>(initialFormData);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -56,7 +57,17 @@ export const ProductForm: React.FC = () => {
     };
 
     // para luego enviar datos al endpoint
-    console.log("Enviando datos:", dataToSend);
+    // console.log("Enviando datos:", dataToSend);
+    createProduct({
+      title: dataToSend.name,
+      date: new Date(),
+      description: dataToSend.description,
+      seller: "1",
+      photos: ["https://picsum.photos/200/300"],
+      condition: dataToSend.status !== "" ? dataToSend.status : "new",
+      price: dataToSend.cost
+    });
+    onResetForm();
   };
 
   return (
@@ -72,6 +83,7 @@ export const ProductForm: React.FC = () => {
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          id='product-form'
         >
           <div className="space-y-6">
             <div>
