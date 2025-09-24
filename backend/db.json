@@ -1,32 +1,96 @@
-{   
-    "users": [
-        {
-            "id": "1",
-            "name": "vendedor 1",
-            "contact": {
-                "whatsapp": "+569 12345678",
-                "email":  "vendedor1@corre.com"
-                }
-        }
-    ],
-    "products": [
-        {
-            "id": "1",
-            "title": "producto prueba",
-            "date": "fecha prueba",
-            "description": "Descripción prueba",
-            "seller": "1",
-            "photos": ["foto1.jpg", "foto2.jpg"],
-            "condition": "new"
-        },
-        {
-            "id": "2",
-            "title": "producto prueba usado",
-            "date": "fecha prueba",
-            "description": "Descripción prueba",
-            "seller": "1",
-            "photos": ["foto3.jpg"],
-            "condition": "used"
-        }
-    ]
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "vendedor 1",
+      "contact": {
+        "whatsapp": "+569 12345678",
+        "email": "vendedor1@corre.com"
+      }
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "title": "producto prueba",
+      "date": "fecha prueba",
+      "description": "Descripción prueba",
+      "seller": "1",
+      "photos": ["foto1.jpg", "foto2.jpg"],
+      "condition": "new",
+      "price": 1
+    },
+    {
+      "id": "2",
+      "title": "producto prueba usado",
+      "date": "fecha prueba",
+      "description": "Descripción prueba",
+      "seller": "1",
+      "photos": ["foto3.jpg"],
+      "condition": "used",
+      "price": 2
+    },
+    {
+      "id": "3",
+      "title": "Alfombra 230X330 cm 100% PET Reciclado Gall 1478 Bazhars",
+      "date": "2025-09-22",
+      "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
+      "seller": "1",
+      "photos": ["/foto1.jpg", "/foto2.jpg", "/foto3.jpg"],
+      "condition": "new",
+      "price": 999
+    },
+    {
+      "id": "4",
+      "title": "Alfombra 230X330 cm 100% PET Reciclado Gall 1478 Bazhars con descripcion 4 veces mas larga",
+      "date": "2025-09-22",
+      "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
+      "seller": "1",
+      "photos": ["/foto1.jpg", "/foto2.jpg", "/foto3.jpg"],
+      "condition": "new",
+      "price": 999999
+    },
+    {
+      "id": "5",
+      "title": "Alfombra 230X330 cm 100% PET Reciclado Gall 1478 Bazhars con descripcion 4 veces mas larga y 5 fotos",
+      "date": "2025-09-22",
+      "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
+      "seller": "1",
+      "photos": [
+        "/foto1.jpg",
+        "/foto2.jpg",
+        "/foto3.jpg",
+        "/foto4.jpg",
+        "/foto5.jpg"
+      ],
+      "condition": "new",
+      "price": 999999
+    },
+    {
+      "id": "6",
+      "title": "Alfombra 230X330 cm 100% PET Reciclado Gall 1478 Bazhars con descripcion 4 veces mas larga y sin fotos",
+      "date": "2025-09-22",
+      "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
+      "seller": "1",
+      "photos": [],
+      "condition": "new",
+      "price": 999999
+    },
+    {
+      "id": "7",
+      "title": "Alfombra 230X330 cm 100% PET Reciclado Gall 1478 Bazhars con descripcion 4 veces mas larga y fotos de vite",
+      "date": "2025-09-22",
+      "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
+      "seller": "1",
+      "photos": [
+        "/vite.svg",
+        "/vite.svg",
+        "/vite.svg",
+        "/vite.svg",
+        "/vite.svg"
+      ],
+      "condition": "new",
+      "price": 999999
+    }
+  ]
 }
