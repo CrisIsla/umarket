@@ -63,7 +63,7 @@ export const ProductForm: React.FC = () => {
       date: new Date(),
       description: dataToSend.description,
       seller: "1",
-      photos: ["https://picsum.photos/200/300"],
+      photos: dataToSend.images.map(() => ("https://picsum.photos/200/300")),
       condition: dataToSend.status !== "" ? dataToSend.status : "new",
       price: dataToSend.cost
     });

@@ -2,10 +2,10 @@
   "users": [
     {
       "id": "1",
-      "name": "vendedor 1",
+      "name": "Leonardo Farkas",
       "contact": {
         "whatsapp": "+569 12345678",
-        "email": "vendedor1@corre.com"
+        "email": "Leo@farkas.com"
       }
     }
   ],
@@ -16,7 +16,7 @@
       "date": "fecha prueba",
       "description": "Descripción prueba",
       "seller": "1",
-      "photos": ["foto1.jpg", "foto2.jpg"],
+      "photos": ["https://picsum.photos/200/300", "https://picsum.photos/200/300"],
       "condition": "new",
       "price": 1
     },
@@ -26,7 +26,7 @@
       "date": "fecha prueba",
       "description": "Descripción prueba",
       "seller": "1",
-      "photos": ["foto3.jpg"],
+      "photos": ["https://picsum.photos/200/300"],
       "condition": "used",
       "price": 2
     },
@@ -36,7 +36,7 @@
       "date": "2025-09-22",
       "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
       "seller": "1",
-      "photos": ["/foto1.jpg", "/foto2.jpg", "/foto3.jpg"],
+      "photos": ["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300"],
       "condition": "new",
       "price": 999
     },
@@ -46,7 +46,7 @@
       "date": "2025-09-22",
       "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
       "seller": "1",
-      "photos": ["/foto1.jpg", "/foto2.jpg", "/foto3.jpg"],
+      "photos": ["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300"],
       "condition": "new",
       "price": 999999
     },
@@ -57,11 +57,11 @@
       "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
       "seller": "1",
       "photos": [
-        "/foto1.jpg",
-        "/foto2.jpg",
-        "/foto3.jpg",
-        "/foto4.jpg",
-        "/foto5.jpg"
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300",
+        "https://picsum.photos/200/300"
       ],
       "condition": "new",
       "price": 999999
@@ -72,7 +72,7 @@
       "date": "2025-09-22",
       "description": "La alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.\nLa alfombra Gall 1478 de Bazhars, en su imponente formato de 230x330 cm, es perfecta para transformar grandes espacion con estilo y conciencia ambiental.\nConfeccionadas 100% a partir de botellas PET recicladas, esta pieza eco-friendly combina elegancia, funcionalidad y sustentabilidad en una sola propuesta.",
       "seller": "1",
-      "photos": [],
+      "photos": ["https://picsum.photos/200/300"],
       "condition": "new",
       "price": 999999
     },
