@@ -22,7 +22,7 @@ export default function Header({ onSearch }: HeaderProps) {
   };
 
   return (
-    <header className="bg-[#031E3C] fixed top-0 left-0 w-screen text-white flex items-center justify-evenly shadow-md">
+    <header className="bg-[#031E3C] fixed top-0 left-0 w-screen text-white flex items-center justify-evenly shadow-md z-999999999">
       {/* Logo */}
       <Link to="/" className="flex items-center px-4 py-1">
         <img src={logo} alt="Umarket Logo" className="max-h-15 w-auto rounded" />
