@@ -12,6 +12,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // States for sorting and filters
   const [sortOption, setSortOption] = useState<string>("recientes");
@@ -61,21 +62,21 @@ export default function Home() {
   }, []);
 
   // Compute counts for filters
-  const conditionCounts = products.reduce((acc, product) => {
+  const conditionCounts = filteredProducts.reduce((acc, product) => {
     if (product.condition) {
       acc[product.condition] = (acc[product.condition] || 0) + 1;
     }
     return acc;
   }, {} as Record<string, number>);
 
-  const categoryCounts = products.reduce((acc, product) => {
+  const categoryCounts = filteredProducts.reduce((acc, product) => {
     if (product.category) {
       acc[product.category] = (acc[product.category] || 0) + 1;
     }
     return acc;
   }, {} as Record<string, number>);
 
-  const tagCounts = products.reduce((acc, product) => {
+  const tagCounts = filteredProducts.reduce((acc, product) => {
     if (Array.isArray(product.tags)) {
       product.tags.forEach((tag) => {
         acc[tag] = (acc[tag] || 0) + 1;
@@ -87,6 +88,11 @@ export default function Home() {
   // Apply condition filter
   useEffect(() => {
     let filtered = products;
+    if (searchQuery.trim() !== "") {
+      filtered = filtered.filter((p) =>
+        p.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
     if (activeCondition) {
       filtered = filtered.filter((p) => p.condition === activeCondition);
     }
@@ -101,21 +107,11 @@ export default function Home() {
       );
     }
     setFilteredProducts(filtered);
-  }, [activeCondition, activeCategory, activeTags, products]);
+  }, [searchQuery, activeCondition, activeCategory, activeTags, products]);
 
   // Handle search
   const handleSearch = (query: string) => {
-    setActiveCondition(null);
-    setActiveCategory(null);
-    setActiveTags([]);
-    if (!query.trim()) {
-      setFilteredProducts(products);
-      return;
-    }
-    const filtered = products.filter((product) =>
-      product.title.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredProducts(filtered);
+    setSearchQuery(query);
   };
 
   // Labels
