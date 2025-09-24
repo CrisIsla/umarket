@@ -1,5 +1,5 @@
 import type { Product } from "../interfaces/product";
-import { ShoppingCart } from "lucide-react";
+import { Button } from "./Button";
 
 interface Props{
     product: Product
@@ -7,15 +7,14 @@ interface Props{
 export default function ProductCardGrid({ product }:Props){
     const { title, condition, photos, price } = product;
     return (
-    <div className="outline rounded-xl p-2">
+    <div className="rounded-xl p-2 flex flex-col justify-between gap-2 pb-4">
         <section className="relative">
-            <p className="bg-gray-500 absolute right-2 top-2 px-2 rounded-xl">{ condition === "new" ? "Nuevo" : (condition === "used" ? "Usado" : condition) } </p>
+            <p className="bg-gray-200 absolute right-2 top-3 px-2 rounded-xl">{ condition === "new" ? "Nuevo" : (condition === "used" ? "Usado" : condition) } </p>
         </section>
-        { photos.length > 0 ? <img src="https://picsum.photos/400/300" className="rounded-md"/> : <p>Sin foto</p> }
-        {/* { photos.length > 0 ? <img src={photos[0]} className="rounded-md"/> : <p>Sin foto</p> } */}
-        <p>{ title } </p>
-        <p className="pb-1">${ price }</p>
-        <button><ShoppingCart size={18}/></button>
+        { photos.length > 0 ? <img src={photos[0]} className="rounded-md"/> : <p>Sin foto</p> }
+        <p className="line-clamp-2 max-w-[20ch] w-full leading-5 min-h-[40px]">{ title } </p>
+        <p className="pb-1 self-center">${ price }</p>
+        <Button className="p-2">Agregar al carrito</Button>
     </div>
     )
 }
