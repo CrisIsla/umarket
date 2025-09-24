@@ -39,7 +39,7 @@ const PhotosGalleryComponent = ({ photos }: PhotosGalleryComponentProps) => {
                 key={index}
                 src={photo}
                 onClick={() => setCurrentPhoto(index)}
-                className={`w-[20%] max-w-[64px] h-auto object-contain rounded-md cursor-pointer border-2 transition ${currentPhotoId === index ? "border-blue-600" : "border-transparent hover:border-gray-400"}`}
+                className={`w-[20%] max-w-[64px] h-auto max-h-[64px] object-contain rounded-md cursor-pointer border-2 transition ${currentPhotoId === index ? "border-blue-600" : "border-transparent hover:border-gray-400"}`}
               ></img>
             );
           })}
