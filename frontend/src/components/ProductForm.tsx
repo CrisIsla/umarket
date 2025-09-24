@@ -65,7 +65,9 @@ export const ProductForm: React.FC = () => {
       seller: "1",
       photos: dataToSend.images.map(() => ("https://picsum.photos/200/300")),
       condition: dataToSend.status !== "" ? dataToSend.status : "new",
-      price: dataToSend.cost
+      price: dataToSend.cost,
+      category: dataToSend.category,
+      tags: dataToSend.tags,
     });
     onResetForm();
   };

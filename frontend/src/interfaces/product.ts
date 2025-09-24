@@ -9,5 +9,7 @@ export interface Product {
   photos: string[] | [];
   condition: "new" | "used";
   price: number;
+  category: string;
+  tags: string[];
 }
 
