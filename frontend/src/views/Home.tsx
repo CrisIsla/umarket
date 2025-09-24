@@ -16,33 +16,33 @@ export default function Home() {
   // States for sorting and filters
   const [sortOption, setSortOption] = useState<string>("recientes");
   const [activeCondition, setActiveCondition] = useState<string | null>(null);
-  //   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  //   const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeTags, setActiveTags] = useState<string[]>([]);
 
   // Sorting logic
   function sortProducts(productsToSort: Product[], criteria: string) {
     switch (criteria) {
       case "recientes":
         return [...productsToSort].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
-      //   case "precio-asc":
-      //     return [...productsToSort].sort((a, b) => a.price - b.price);
-      //   case "precio-desc":
-      //     return [...productsToSort].sort((a, b) => b.price - a.price);
+      case "precio-asc":
+        return [...productsToSort].sort((a, b) => a.price - b.price);
+      case "precio-desc":
+        return [...productsToSort].sort((a, b) => b.price - a.price);
       default:
         return productsToSort;
     }
   }
   const sortedProducts = sortProducts(filteredProducts, sortOption);
 
-  // const toggleTag = (tag: string) => {
-  //   setActiveTags(prevTags =>
-  //     prevTags.includes(tag)
-  //       ? prevTags.filter(t => t !== tag)
-  //       : [...prevTags, tag]
-  //   );
-  // };
+  const toggleTag = (tag: string) => {
+    setActiveTags((prevTags) =>
+      prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag]
+    );
+  };
 
   // Initial fetch of products
   useEffect(() => {
@@ -61,32 +61,28 @@ export default function Home() {
   }, []);
 
   // Compute counts for filters
-  const conditionCounts = products.reduce(
-    (acc, product) => {
-      if (product.condition) {
-        acc[product.condition] = (acc[product.condition] || 0) + 1;
-      }
-      return acc;
-    },
-    {} as Record<string, number>,
-  );
+  const conditionCounts = products.reduce((acc, product) => {
+    if (product.condition) {
+      acc[product.condition] = (acc[product.condition] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
 
-  // const categoryCounts = products.reduce((acc, product) => {
-  //   if (product.category) {
-  //       acc[product.category] = (acc[product.category] || 0) + 1;
-  //   }
-  //   return acc;
-  // }, {} as Record<string, number>);
+  const categoryCounts = products.reduce((acc, product) => {
+    if (product.category) {
+      acc[product.category] = (acc[product.category] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
 
-  //   const tagCounts = products.reduce((acc, product) => {
-  //     if (product.tags && typeof product.tags === "string") {
-  //         const tags = product.tags.split(",").map(tag => tag.trim());
-  //         tags.forEach(tag => {
-  //             acc[tag] = (acc[tag] || 0) + 1;
-  //         });
-  //     }
-  //     return acc;
-  //   }, {} as Record<string, number>);
+  const tagCounts = products.reduce((acc, product) => {
+    if (Array.isArray(product.tags)) {
+      product.tags.forEach((tag) => {
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
+    }
+    return acc;
+  }, {} as Record<string, number>);
 
   // Apply condition filter
   useEffect(() => {
@@ -94,30 +90,30 @@ export default function Home() {
     if (activeCondition) {
       filtered = filtered.filter((p) => p.condition === activeCondition);
     }
-    // if (activeCategory) {
-    //   filtered = filtered.filter(p => p.category === activeCategory);
-    // }
-    // if (activeTag) {
-    //   filtered = filtered.filter(p =>
-    //     if (!p.tags || typeof p.tags !== "string") return false;
-    //     const tags = p.tags.split(",").map(tag => tag.trim());
-    //     return tags.includes(activeTag);
-    //   );
-    // }
+    if (activeCategory) {
+      filtered = filtered.filter((p) => p.category === activeCategory);
+    }
+    if (activeTags && activeTags.length > 0) {
+      filtered = filtered.filter(
+        (p) =>
+          Array.isArray(p.tags) &&
+          activeTags.some((tag) => p.tags.includes(tag))
+      );
+    }
     setFilteredProducts(filtered);
-  }, [activeCondition /*, activeCategory*/ /*, activeTag */, products]);
+  }, [activeCondition, activeCategory, activeTags, products]);
 
   // Handle search
   const handleSearch = (query: string) => {
     setActiveCondition(null);
-    // setActiveCategory(null);
-    // setActiveTag(null);
+    setActiveCategory(null);
+    setActiveTags([]);
     if (!query.trim()) {
       setFilteredProducts(products);
       return;
     }
     const filtered = products.filter((product) =>
-      product.title.toLowerCase().includes(query.toLowerCase()),
+      product.title.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredProducts(filtered);
   };
@@ -126,19 +122,19 @@ export default function Home() {
   const filterLabels: Record<string, string> = {
     new: "Nuevo",
     used: "Usado",
-    // electronics: "Electrónica",
-    // clothing: "Ropa",
-    // sports: "Deportes",
-    // books: "Libros",
-    // tech: "Tecnología",
-    // other: "Otros",
+    electronics: "Electrónica",
+    clothing: "Ropa",
+    sports: "Deportes",
+    books: "Libros",
+    tech: "Tecnología",
+    other: "Otros",
   };
 
   return (
     <>
       <Header onSearch={handleSearch} />
       <div className="flex w-screen mx-auto pt-12">
-        {/* Zona filtros */}
+        {/* Filters */}
         <div className="pt-8 pr-4 ml-20">
           <strong>Condición</strong>
           {Object.entries(conditionCounts).map(([condition, count]) =>
@@ -147,7 +143,7 @@ export default function Home() {
                 key={condition}
                 onClick={() =>
                   setActiveCondition(
-                    condition === activeCondition ? null : condition,
+                    condition === activeCondition ? null : condition
                   )
                 }
                 className={`cursor-pointer ${
@@ -156,48 +152,55 @@ export default function Home() {
               >
                 {filterLabels[condition] || condition} ({count})
               </div>
-            ) : null,
+            ) : null
           )}
           <br />
           <strong>Categorías</strong>
-          {/* {Object.entries(categoryCounts).map(([category, count]) =>
-                count > 0 ? (
-                    <div key={category} 
-                    onClick={() => setActiveCategory(category === activeCategory ? null : category)} 
-                    className={`cursor-pointer ${activeCategory === category ? "font-bold" : ""}`}>
-                        {filterLabels[category] || category} ({count})
-                    </div>
-                ) : null
-            )} */}
-          <div>Gris (1)</div>
-          <div>Rojo (2)</div>
-          <div>Azul (1)</div>
+          {Object.entries(categoryCounts).map(([category, count]) =>
+            count > 0 ? (
+              <div
+                key={category}
+                onClick={() =>
+                  setActiveCategory(
+                    category === activeCategory ? null : category
+                  )
+                }
+                className={`cursor-pointer ${
+                  activeCategory === category ? "font-bold" : ""
+                }`}
+              >
+                {filterLabels[category] || category} ({count})
+              </div>
+            ) : null
+          )}
           <br />
           <strong>Etiquetas</strong>
-          {/* {Object.entries(tagCounts).map(([tag, count]) =>
-                count > 0 ? (
-                    <div key={tag}
-                    onClick={() => setActiveTag(tag === activeTag ? null : tag)}
-                    className={`cursor-pointer ${activeTag === tag ? "font-bold" : ""}`}
-                    >
-                        {tag} ({count})
-                    </div>
-                ) : null
-            )} */}
-          <div>Ubicación</div>
-          <div>Rango de precio</div>
+          {Object.entries(tagCounts).map(([tag, count]) =>
+            count > 0 ? (
+              <div
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`cursor-pointer ${
+                  activeTags.includes(tag) ? "font-bold" : ""
+                }`}
+              >
+                {tag} ({count})
+              </div>
+            ) : null
+          )}
           <button
             onClick={() => {
               setActiveCondition(null);
               setFilteredProducts(products);
-              // setActiveCategory(null);
+              setActiveCategory(null);
+              setActiveTags([]);
             }}
             className="mb-4 text-blue-600 underline"
           >
             Limpiar filtros
           </button>
         </div>
-        {/* Zona productos */}
+        {/* Products */}
         <div className="flex-1 pr-8">
           <div className="flex justify-end mb-6 gap-2">
             <select
@@ -255,7 +258,7 @@ export default function Home() {
                 >
                   <ProductCardGrid product={p} />
                 </div>
-              ),
+              )
             )}
           </div>
         </div>

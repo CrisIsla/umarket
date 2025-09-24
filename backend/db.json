@@ -21,7 +21,9 @@
         "https://picsum.photos/200/300"
       ],
       "condition": "new",
-      "price": 1
+      "category": "tech",
+      "tags": ["gris", "rojo", "azul"],
+      "price": 1    
     },
     {
       "id": "2",
