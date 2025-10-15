@@ -57,7 +57,7 @@ export const ProductForm: React.FC = () => {
     };
 
     // para luego enviar datos al endpoint
-    // console.log("Enviando datos:", dataToSend);
+
     createProduct({
       title: dataToSend.name,
       date: new Date(),
@@ -69,6 +69,23 @@ export const ProductForm: React.FC = () => {
       category: dataToSend.category,
       tags: dataToSend.tags,
     });
+    /* Para enviar las fotos */
+    // const productData = new FormData();
+    // productData.append("title", dataToSend.name)
+    // productData.append("date", new Date().toLocaleString())
+    // productData.append("description", dataToSend.description)
+    // productData.append("seller", "1")
+    // dataToSend.images.forEach(image => {
+    //   productData.append("images", image)
+    // });
+    // productData.append("condition", dataToSend.status !== "" ? dataToSend.status : "new")
+    // productData.append("price", dataToSend.cost.toString())
+    // productData.append("category", dataToSend.category)
+    // dataToSend.tags.forEach(tag => {
+    //   productData.append("tags", tag)
+    // });
+    // createProduct(productData)
+    /* ----------------------- */
     onResetForm();
   };
 

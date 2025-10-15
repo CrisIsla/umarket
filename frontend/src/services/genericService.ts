@@ -1,8 +1,22 @@
 import { api } from "./api_config";
 
+/* Para enviar las fotos al backend */
+// interface ApiRequest<T>{
+//     method: 'get' | 'post' | 'put' | 'delete';
+//     url: string;
+//     body?: T | FormData;
+//     params?: {
+//         page: number,
+//         limit: number
+//     },
+//     successfulMessage: string;
+//     errorMessage: string;
+// }
+/* ------------------ */
 interface ApiRequest<T>{
     method: 'get' | 'post' | 'put' | 'delete';
     url: string;
+    // body?: T | FormData; /* Para enviar fotos al backend */
     data?: T;
     params?: {
         page: number,
@@ -24,6 +38,7 @@ async function connectingWithServer<T,R>(request: ApiRequest<T>): Promise<ApiRes
             method: request.method,
             url: request.url,
             data: request.data,
+            // data:request.body, /* para enviar fotos al backend */
             params: request.params
         });
 
