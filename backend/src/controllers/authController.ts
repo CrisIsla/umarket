@@ -1,10 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
 import { addTokenToResponse } from "../utils/auth";
 import { withUser } from "../utils/authMiddleware";
-import config from "../utils/config";
 // import UserModel from "../models/";
 
 const router = express.Router();
