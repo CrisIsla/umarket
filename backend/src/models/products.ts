@@ -1,21 +1,9 @@
 import mongoose from "mongoose";
+import { Product } from "../interfaces/Product";
 
 mongoose.set("strictQuery", false);
 
-interface ProductData {
-  readonly id: string;
-  title: string;
-  date: string | Date;
-  description: string;
-  seller: mongoose.Types.ObjectId;
-  photos: string[] | [];
-  condition: "new" | "used";
-  price: number;
-  category: string;
-  tags: string[];
-}
-
-const productSchema = new mongoose.Schema<ProductData>({
+const productSchema = new mongoose.Schema<Product>({
   title: String,
   date: {
     type: Date,

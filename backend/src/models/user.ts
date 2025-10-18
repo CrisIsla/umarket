@@ -1,22 +1,12 @@
-import { kMaxLength } from "buffer";
 import mongoose from "mongoose";
+import { User } from "../interfaces/User";
 
 mongoose.set("strictQuery", false);
 
-export interface UserData {
-  readonly id: string;
-  name: string;
-  contact: {
-    phoneNumber: string;
-    email: string;
-  };
-}
-
-const userSchema = new mongoose.Schema<UserData>({
+const userSchema = new mongoose.Schema<User>({
   name: String,
   contact: {
-    required: false,
-    phoneNumber: { type: String, minLength: 8 },
+    whatsapp: { type: String, minLength: 8 },
     email: String,
   },
 });
