@@ -1,5 +1,8 @@
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
+import { useState } from "react";
+import type { User } from "@/interfaces/user";
+import loginService from "@/services/loginService";
 
 interface RegisterFormData {
   name: string;
@@ -15,20 +18,36 @@ const initialFormData: RegisterFormData = {
 };
 
 export const RegisterForm = () => {
-  const { formState, onInputChange } =
+
+  const [user, setUser] = useState<User | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { formState, onInputChange, onResetForm } =
     useForm<RegisterFormData>(initialFormData);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("amazingg");
+    try {
+      const user = await loginService.login({
+        username: formState.name,
+        password: formState.password,
+      });
+      setUser(user);
+      onResetForm();
+    } catch (exception) {
+      setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
   };
 
   return (
-    <div className="mt-8">
+    <div className="h-full mt-8">
       <h1 className="flex items-center justify-center text-3xl font-semibold text-gray-900 mb-4">
         Crear cuenta
       </h1>
-      <div className="w-full h-full grid grid-rows-5 justify-center">
+      <div className="w-full grid grid-rows-5">
         <form
           className="space-y-4 w-72 justify-between"
           onSubmit={handleSubmit}
