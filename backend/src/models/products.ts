@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Product } from "../interfaces/Product";
+import { photoSchema } from "../models/photos";
 
 mongoose.set("strictQuery", false);
 
@@ -20,7 +21,7 @@ const productSchema = new mongoose.Schema<Product>({
     ref: "User",
   },
   photos: {
-    type: [String],
+    type: [photoSchema],
     minLength: 0,
     maxLength: 5,
   },
