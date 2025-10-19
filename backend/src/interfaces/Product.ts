@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface Product {
   readonly id: string;
   title: string;
