@@ -7,8 +7,8 @@ import { RegisterPage } from "@/pages/RegisterPage";
 import { LoginPage } from "@/pages/LoginPage";
 
 export const AppRoutes = () => {
+  
   const { status } = useCheckAuth();
-  console.log(status)
 
   return (
     <Routes>
@@ -34,7 +34,7 @@ export const AppRoutes = () => {
           status === "authenticated" ? (
             <Navigate to="/" replace />
           ) : (
-            <RegisterPage/>
+            <RegisterPage />
           )
         }
       />
