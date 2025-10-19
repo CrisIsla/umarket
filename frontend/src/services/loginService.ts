@@ -6,7 +6,7 @@ type Credentials = {
     password: string;
 };
 
-const login = async (credentials: Credentials) => {
+export const login = async (credentials: Credentials) => {
     const response = await axios.post("/api/login", credentials);
     const csrfToken = response.headers["x-csrf-token"];
 
@@ -18,7 +18,7 @@ const login = async (credentials: Credentials) => {
 };
 
 
-const register = async (credentials: Credentials) => {
+export const register = async (credentials: Credentials) => {
   const response = await axios.post("/api/register", credentials);
   const csrfToken = response.headers["x-csrf-token"];
 
@@ -29,7 +29,7 @@ const register = async (credentials: Credentials) => {
   return response.data;
 }
 
-const restoreLogin = async () => {
+export const restoreLogin = async () => {
     try {
         const response = await axiosSecure.get("/api/login/me");
         return response.data;
@@ -38,9 +38,7 @@ const restoreLogin = async () => {
     }
 };
 
-const logout = async () => {
+export const logout = async () => {
     await axios.post("/api/login/logout");
     localStorage.removeItem("csrfToken");
 };
-
-export default { login, restoreLogin, logout, register };
