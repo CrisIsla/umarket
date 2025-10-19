@@ -1,7 +1,6 @@
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 import { useState } from "react";
-import type { User } from "@/interfaces/user";
 import { register } from "@/services/loginService";
 import { useNavigate } from "react-router";
 
