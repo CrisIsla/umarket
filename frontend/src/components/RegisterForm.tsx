@@ -81,12 +81,16 @@ export const RegisterForm = () => {
             placeholder="Repetir contraseña"
             className="border p-2 rounded w-full"
             onChange={onInputChange}
-            value={formState.password}
+            value={formState.password_repetition}
           />
 
           <Button type="submit" className=" w-full px-4 py-3 rounded-lg">
             Crear cuenta
           </Button>
+
+          {errorMessage && (
+            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+          )}
         </form>
       </div>
     </div>

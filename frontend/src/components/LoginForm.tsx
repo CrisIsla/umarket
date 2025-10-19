@@ -77,6 +77,10 @@ export const LoginForm = () => {
             Iniciar sesión
           </Button>
 
+          {errorMessage && (
+            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+          )}
+
           <hr />
         </form>
         <a href="/register">
