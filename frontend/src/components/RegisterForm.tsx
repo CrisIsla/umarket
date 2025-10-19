@@ -2,7 +2,8 @@ import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 import { useState } from "react";
 import type { User } from "@/interfaces/user";
-import loginService from "@/services/loginService";
+import { register } from "@/services/loginService";
+import { useNavigate } from "react-router";
 
 interface RegisterFormData {
   name: string;
@@ -18,27 +19,33 @@ const initialFormData: RegisterFormData = {
 };
 
 export const RegisterForm = () => {
-
   const [user, setUser] = useState<User | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const { formState, onInputChange, onResetForm } =
     useForm<RegisterFormData>(initialFormData);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formState.password !== formState.password_repetition) {
+      setErrorMessage("Las contraseñas no coinciden");
+      setTimeout(() => setErrorMessage(null), 3000);
+      return;
+    }
+
     try {
-      const user = await loginService.login({
+      const user = await register({
         username: formState.name,
         password: formState.password,
       });
       setUser(user);
       onResetForm();
+      navigate("/products/new");
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+      setErrorMessage("Error al crear la cuenta");
+      setTimeout(() => setErrorMessage(null), 5000);
     }
   };
 
@@ -80,10 +87,7 @@ export const RegisterForm = () => {
             value={formState.password}
           />
 
-          <Button
-            type="submit"
-            className=" w-full px-4 py-3 rounded-lg"
-          >
+          <Button type="submit" className=" w-full px-4 py-3 rounded-lg">
             Crear cuenta
           </Button>
         </form>
