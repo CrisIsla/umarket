@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/products", productRouter);
+app.use("/auth", authController);
 
 app.use(authErrorHandler);
 app.use(errorHandler);

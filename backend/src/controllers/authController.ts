@@ -1,8 +1,8 @@
 import express from "express";
-import bcrypt from "bcrypt";
 import { addTokenToResponse } from "../utils/auth";
+import bcrypt from "bcrypt";
 import { withUser } from "../utils/authMiddleware";
-// import UserModel from "../models/";
+import User from "../models/user";
 
 const router = express.Router();
 
@@ -12,13 +12,13 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
-    const existing_email = await UserModel.findOne({ "contact.email": contact.email });
+    const existing_email = await User.findOne({ "contact.email": contact.email });
     if (existing_email) {
       return res.status(400).json({ error: "Email ya registrado" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const newUser = await UserModel.create({
+    const newUser = await User.create({
       name,
       contact,
       password: passwordHash,
@@ -32,18 +32,18 @@ router.post("/login", async (req, res) => {
   if (!email || !password)
     return res.status(400).json({ error: "Email y contraseña requeridos" });
 
-  const user = await UserModel.findOne({ "contact.email": email });
-  if (!user) return res.status(401).json({ error: "Correo o contraseña incorrecta" });
+  const user = await User.findOne({ "contact.email": email });
+  if (!user) return res.status(401).json({ error: "Correo o contraseña incorrectos" });
 
   const passwordCorrect = await bcrypt.compare(password, user.password);
-  if (!passwordCorrect) return res.status(401).json({ error: "Correo o contraseña incorrecta" });
+  if (!passwordCorrect) return res.status(401).json({ error: "Correo o contraseña incorrectos" });
 
   addTokenToResponse(res, user);
   return res.status(200).json({ id: user.id, name: user.name, email: user.contact.email });
 });
 
 router.get("/me", withUser, async (req, res) => {
-  const user = await UserModel.findById(req.userId, { password: 0 });
+  const user = await User.findById(req.userId, { password: 0 });
   if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
   res.json(user);
 });
