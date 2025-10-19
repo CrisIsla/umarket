@@ -58,34 +58,21 @@ export const ProductForm: React.FC = () => {
 
     // para luego enviar datos al endpoint
 
-    createProduct({
-      title: dataToSend.name,
-      date: new Date(),
-      description: dataToSend.description,
-      seller: "1",
-      photos: dataToSend.images.map(() => ("https://picsum.photos/200/300")),
-      condition: dataToSend.status !== "" ? dataToSend.status : "new",
-      price: dataToSend.cost,
-      category: dataToSend.category,
-      tags: dataToSend.tags,
+    const productData = new FormData();
+    productData.append("title", dataToSend.name)
+    productData.append("date", new Date().toLocaleString())
+    productData.append("description", dataToSend.description)
+    productData.append("seller", "1")
+    dataToSend.images.forEach(image => {
+      productData.append("photos", image)
     });
-    /* Para enviar las fotos */
-    // const productData = new FormData();
-    // productData.append("title", dataToSend.name)
-    // productData.append("date", new Date().toLocaleString())
-    // productData.append("description", dataToSend.description)
-    // productData.append("seller", "1")
-    // dataToSend.images.forEach(image => {
-    //   productData.append("images", image)
-    // });
-    // productData.append("condition", dataToSend.status !== "" ? dataToSend.status : "new")
-    // productData.append("price", dataToSend.cost.toString())
-    // productData.append("category", dataToSend.category)
-    // dataToSend.tags.forEach(tag => {
-    //   productData.append("tags", tag)
-    // });
-    // createProduct(productData)
-    /* ----------------------- */
+    productData.append("condition", dataToSend.status !== "" ? dataToSend.status : "new")
+    productData.append("price", dataToSend.cost.toString())
+    productData.append("category", dataToSend.category)
+    dataToSend.tags.forEach(tag => {
+      productData.append("tags", tag)
+    });
+    createProduct(productData)
     onResetForm();
   };
 

@@ -16,21 +16,11 @@ const ERROR_MESSAGES = {
 };
 
 /* Para enviar las fotos al backend */
-// export function createProduct(product: FormData) {
-//   return connectingWithServer<FormData, Product>({
-//     method: "post",
-//     url: "/products",
-//     body: product,
-//     errorMessage: ERROR_MESSAGES.CREATE,
-//     successfulMessage: SUCCESSFULL_MESSAGES.CREATE,
-//   });
-// }
-/* ----------------------- */
-export function createProduct(product: Omit<Product, "id">) {
-  return connectingWithServer<Omit<Product, "id">, Product>({
+export function createProduct(product: FormData) {
+  return connectingWithServer<FormData, Product>({
     method: "post",
     url: "/products",
-    data: product,
+    body: product,
     errorMessage: ERROR_MESSAGES.CREATE,
     successfulMessage: SUCCESSFULL_MESSAGES.CREATE,
   });
