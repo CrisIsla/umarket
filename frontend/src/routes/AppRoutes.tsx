@@ -3,9 +3,12 @@ import { ProtectedRoutes } from "@/components/ProtectedRoutes";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
 import Home from "@/views/Home";
+import { RegisterPage } from "@/pages/RegisterPage";
+import { LoginPage } from "@/pages/LoginPage";
 
 export const AppRoutes = () => {
   const { status } = useCheckAuth();
+  console.log(status)
 
   return (
     <Routes>
@@ -31,7 +34,7 @@ export const AppRoutes = () => {
           status === "authenticated" ? (
             <Navigate to="/" replace />
           ) : (
-            <Navigate to="/register" replace />
+            <RegisterPage/>
           )
         }
       />
@@ -41,7 +44,7 @@ export const AppRoutes = () => {
           status === "authenticated" ? (
             <Navigate to="/" replace />
           ) : (
-            <Navigate to="/login" replace />
+            <LoginPage />
           )
         }
       />
