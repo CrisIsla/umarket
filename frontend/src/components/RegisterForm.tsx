@@ -19,7 +19,6 @@ const initialFormData: RegisterFormData = {
 };
 
 export const RegisterForm = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -36,11 +35,10 @@ export const RegisterForm = () => {
     }
 
     try {
-      const user = await register({
+      await register({
         username: formState.name,
         password: formState.password,
       });
-      setUser(user);
       onResetForm();
       navigate("/products/new");
     } catch (exception) {
