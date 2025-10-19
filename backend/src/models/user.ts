@@ -4,11 +4,12 @@ import { User } from "../interfaces/User";
 mongoose.set("strictQuery", false);
 
 const userSchema = new mongoose.Schema<User>({
-  name: String,
+  name: { type: String, required: true },
   contact: {
     whatsapp: { type: String, minLength: 8 },
-    email: String,
+    email: { type: String, required: true, unique: true },
   },
+  password: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -20,11 +21,13 @@ userSchema.set("toJSON", {
       id?: string;
       _id?: mongoose.Types.ObjectId;
       __v?: number;
+      password?: string;
     },
   ) => {
     returnedObject.id = returnedObject._id?.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
+    delete returnedObject.password;
   },
 });
 
