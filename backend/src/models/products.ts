@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema<Product>({
     ref: "User",
   },
   photos: {
-    type: [photoSchema],
+    type: [String],
     minLength: 0,
     maxLength: 5,
   },
@@ -47,7 +47,7 @@ productSchema.set("toJSON", {
       id?: string;
       _id?: mongoose.Types.ObjectId;
       __v?: number;
-    },
+  },
   ) => {
     returnedObject.id = returnedObject._id?.toString();
     delete returnedObject._id;

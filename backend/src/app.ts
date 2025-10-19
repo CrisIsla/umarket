@@ -7,6 +7,7 @@ import productRouter from "./controllers/product";
 import mongoose from "mongoose";
 import config from "./utils/config";
 import logger from "./utils/logger";
+import cors from "cors";
 
 const { MONGODB_DBNAME, MONGODB_URI } = config;
 const app = express();

@@ -12,11 +12,11 @@ const upload = multer({
 });
 
 router.get("/", async (request, response) => {
-  const notes = await Product.find({}).populate("seller", {
+  const products = await Product.find({}).populate("seller", {
     username: 1,
     email: 1,
   });
-  response.json(notes);
+  response.json(products);
 });
 
 router.get("/:id", async (request, response, next) => {
@@ -34,14 +34,13 @@ router.get("/:id", async (request, response, next) => {
 
 router.post(
   "/",
-  withUser,
+  /*withUser,*/
   upload.array("photos", 5),
   async (request, response, next) => {
     const body = request.body;
     const user = await User.findById(request.userId);
 
     const files = (request.files as Express.Multer.File[]) || [];
-
     const requiredFields = [
       "title",
       "description",
@@ -67,11 +66,11 @@ router.post(
         price: body.price,
         category: body.category,
         tags: body.tags,
-        photos: files.map((file) => ({
-          name: file.originalname,
-          data: file.buffer,
-          contentType: file.mimetype,
-        })),
+        photos: files.map((file) => {
+          const buffer = file.buffer;
+          const base64String = 'data:img/png;base64,' + Buffer.from(buffer).toString('base64');
+          return base64String;
+        }),
         seller: user.id,
       };
 
