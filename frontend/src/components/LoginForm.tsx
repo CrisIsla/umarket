@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { login } from "@/services/loginService";
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 
@@ -13,11 +16,29 @@ const initialFormData: LoginFormData = {
 };
 
 export const LoginForm = () => {
-  const { formState, onInputChange } = useForm<LoginFormData>(initialFormData);
+  const { formState, onInputChange, onResetForm } =
+    useForm<LoginFormData>(initialFormData);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("amazingg");
+    setErrorMessage(null);
+
+    try {
+      await login({
+        username: formState.name,
+        password: formState.password,
+      });
+
+      navigate("/products/new");
+      onResetForm();
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("Credenciales invalidas");
+      setTimeout(() => setErrorMessage(null), 4000);
+    }
   };
 
   return (
@@ -26,9 +47,9 @@ export const LoginForm = () => {
         Iniciar Sesión
       </h1>
       <div className="w-full h-full grid grid-rows-5 justify-center">
-        <form 
-            className="space-y-4 w-72 justify-between" 
-            onSubmit={handleSubmit}
+        <form
+          className="space-y-4 w-72 justify-between"
+          onSubmit={handleSubmit}
         >
           <input
             type="text"
