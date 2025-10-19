@@ -32,7 +32,7 @@ export const LoginForm = () => {
         password: formState.password,
       });
 
-      navigate("/products/new");
+      navigate("/");
       onResetForm();
     } catch (error) {
       console.error("Login error:", error);
