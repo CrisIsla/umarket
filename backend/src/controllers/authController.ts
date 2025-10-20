@@ -38,8 +38,8 @@ router.post("/login", async (req, res) => {
   const passwordCorrect = await bcrypt.compare(password, user.password);
   if (!passwordCorrect) return res.status(401).json({ error: "Correo o contraseña incorrectos" });
 
-  addTokenToResponse(res, user);
-  return res.status(200).json({ id: user.id, name: user.name, email: user.contact.email });
+  const resToken = addTokenToResponse(res, user);
+  return resToken.status(200).json({ id: user.id, name: user.name, email: user.contact.email });
 });
 
 router.get("/me", withUser, async (req, res) => {
