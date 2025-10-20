@@ -2,12 +2,20 @@ import axios from "axios";
 import axiosSecure from "../utils/axiosSecure";
 
 type Credentials = {
-    username: string;
+    email: string;
     password: string;
 };
 
+type RegisterCredentials = { 
+    username: string;
+    password: string;
+    contact: { 
+        email: string; 
+    }
+};
+
 export const login = async (credentials: Credentials) => {
-    const response = await axios.post("/api/login", credentials);
+    const response = await axios.post("api/auth/login", credentials);
     const csrfToken = response.headers["x-csrf-token"];
 
     if (csrfToken) {
@@ -18,8 +26,8 @@ export const login = async (credentials: Credentials) => {
 };
 
 
-export const register = async (credentials: Credentials) => {
-  const response = await axios.post("/api/register", credentials);
+export const register = async (credentials: RegisterCredentials) => {
+  const response = await axios.post("api/auth/register", credentials);
   const csrfToken = response.headers["x-csrf-token"];
 
   if (csrfToken) {

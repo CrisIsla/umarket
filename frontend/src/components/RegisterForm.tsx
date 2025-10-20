@@ -9,12 +9,14 @@ interface RegisterFormData {
   password: string;
   password_repetition: string;
   [key: string]: string;
+  email: string;
 }
 
 const initialFormData: RegisterFormData = {
   name: "",
   password: "",
   password_repetition: "",
+  email: ""
 };
 
 export const RegisterForm = () => {
@@ -36,6 +38,9 @@ export const RegisterForm = () => {
     try {
       await register({
         username: formState.name,
+        contact: {
+          email: formState.email
+        },
         password: formState.password,
       });
       onResetForm();
@@ -56,6 +61,15 @@ export const RegisterForm = () => {
           className="space-y-4 w-72 justify-between"
           onSubmit={handleSubmit}
         >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="Correo"
+            className="border p-2 rounded w-full"
+            onChange={onInputChange}
+            value={formState.email}
+          />
           <input
             type="text"
             name="name"

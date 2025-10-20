@@ -5,13 +5,13 @@ import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 
 interface LoginFormData {
-  name: string;
+  email: string;
   password: string;
   [key: string]: string;
 }
 
 const initialFormData: LoginFormData = {
-  name: "",
+  email: "",
   password: "",
 };
 
@@ -28,7 +28,7 @@ export const LoginForm = () => {
 
     try {
       await login({
-        username: formState.name,
+        email: formState.email,
         password: formState.password,
       });
 
@@ -52,13 +52,13 @@ export const LoginForm = () => {
           onSubmit={handleSubmit}
         >
           <input
-            type="text"
-            name="name"
+            type="email"
+            name="email"
             required
-            placeholder="Nombre"
+            placeholder="Correo"
             className="border p-2 rounded w-full"
             onChange={onInputChange}
-            value={formState.name}
+            value={formState.email}
           />
           <input
             type="password"
