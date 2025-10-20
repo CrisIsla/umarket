@@ -18,7 +18,7 @@ export default function ProductCardGrid({ product }:Props){
                 <p className="bg-gray-200 absolute right-2 top-3 px-2 rounded-xl">{ condition === "new" ? "Nuevo" : (condition === "used" ? "Usado" : condition) } </p>
             </section>
             { photos.length > 0 ? <img src={photos[0]} className="rounded-md max-h-72 w-auto object-contain"/> : <p className="self-center p-8">Sin foto</p> }
-            <p className="line-clamp-2 max-w-[20ch] w-full leading-5 min-h-[40px]">{ title } </p>
+            <p className="line-clamp-2 max-w-[40ch] w-full leading-5 min-h-[40px] text-center">{ title } </p>
             <p className="pb-1 self-center">${ price }</p>
         </section>
         <Button className="p-2 w-fit">Agregar al carrito</Button>
