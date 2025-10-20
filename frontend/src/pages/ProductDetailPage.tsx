@@ -8,7 +8,7 @@ export const ProductDetailPage = () => {
   if (!id) throw new Error("parameter id was not provided");
   return (
     <div className="min-h-screen px-7 py-4 bg-gray-400/50">
-      <Header onSearch={() => {}} />
+      <Header />
       <ProductDetailComponent id={id} />
     </div>
   );

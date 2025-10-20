@@ -29,7 +29,7 @@ export default function Home() {
     switch (criteria) {
       case "recientes":
         return [...productsToSort].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
       case "precio-asc":
         return [...productsToSort].sort((a, b) => a.price - b.price);
@@ -45,7 +45,7 @@ export default function Home() {
     setActiveTags((prevTags) =>
       prevTags.includes(tag)
         ? prevTags.filter((t) => t !== tag)
-        : [...prevTags, tag]
+        : [...prevTags, tag],
     );
   };
 
@@ -79,35 +79,44 @@ export default function Home() {
   // }, []);
 
   // Compute counts for filters
-  const conditionCounts = filteredProducts.reduce((acc, product) => {
-    if (product.condition) {
-      acc[product.condition] = (acc[product.condition] || 0) + 1;
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  const conditionCounts = filteredProducts.reduce(
+    (acc, product) => {
+      if (product.condition) {
+        acc[product.condition] = (acc[product.condition] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
-  const categoryCounts = filteredProducts.reduce((acc, product) => {
-    if (product.category) {
-      acc[product.category] = (acc[product.category] || 0) + 1;
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  const categoryCounts = filteredProducts.reduce(
+    (acc, product) => {
+      if (product.category) {
+        acc[product.category] = (acc[product.category] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
-  const tagCounts = filteredProducts.reduce((acc, product) => {
-    if (Array.isArray(product.tags)) {
-      product.tags.forEach((tag) => {
-        acc[tag] = (acc[tag] || 0) + 1;
-      });
-    }
-    return acc;
-  }, {} as Record<string, number>);
+  const tagCounts = filteredProducts.reduce(
+    (acc, product) => {
+      if (Array.isArray(product.tags)) {
+        product.tags.forEach((tag) => {
+          acc[tag] = (acc[tag] || 0) + 1;
+        });
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   // Apply condition filter
   useEffect(() => {
     let filtered = products;
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((p) =>
-        p.title.toLowerCase().includes(searchQuery.toLowerCase())
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
     if (activeCondition) {
@@ -120,16 +129,16 @@ export default function Home() {
       filtered = filtered.filter(
         (p) =>
           Array.isArray(p.tags) &&
-          activeTags.some((tag) => p.tags.includes(tag))
+          activeTags.some((tag) => p.tags.includes(tag)),
       );
     }
     setFilteredProducts(filtered);
   }, [searchQuery, activeCondition, activeCategory, activeTags, products]);
 
   // Handle search
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+  // };
 
   // Labels
   const filterLabels: Record<string, string> = {
@@ -156,7 +165,7 @@ export default function Home() {
                 key={condition}
                 onClick={() =>
                   setActiveCondition(
-                    condition === activeCondition ? null : condition
+                    condition === activeCondition ? null : condition,
                   )
                 }
                 className={`cursor-pointer ${
@@ -165,7 +174,7 @@ export default function Home() {
               >
                 {filterLabels[condition] || condition} ({count})
               </div>
-            ) : null
+            ) : null,
           )}
           <br />
           <strong>Categorías</strong>
@@ -175,7 +184,7 @@ export default function Home() {
                 key={category}
                 onClick={() =>
                   setActiveCategory(
-                    category === activeCategory ? null : category
+                    category === activeCategory ? null : category,
                   )
                 }
                 className={`cursor-pointer ${
@@ -184,7 +193,7 @@ export default function Home() {
               >
                 {filterLabels[category] || category} ({count})
               </div>
-            ) : null
+            ) : null,
           )}
           <br />
           <strong>Etiquetas</strong>
@@ -199,7 +208,7 @@ export default function Home() {
               >
                 {tag} ({count})
               </div>
-            ) : null
+            ) : null,
           )}
           <button
             onClick={() => {
@@ -272,7 +281,7 @@ export default function Home() {
                 >
                   <ProductCardGrid product={p} />
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
@@ -280,3 +289,4 @@ export default function Home() {
     </>
   );
 }
+
