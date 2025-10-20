@@ -3,7 +3,7 @@ import api from "./api_config";
 interface ApiRequest<T>{
     method: 'get' | 'post' | 'put' | 'delete';
     url: string;
-    data?: T;
+    body?: T | FormData;
     params?: {
         page: number,
         limit: number
@@ -23,7 +23,7 @@ async function connectingWithServer<T,R>(request: ApiRequest<T>): Promise<ApiRes
         const response = await api({
             method: request.method,
             url: request.url,
-            data: request.data,
+            data:request.body,
             params: request.params
         });
 

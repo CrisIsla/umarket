@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Product } from "../interfaces/Product";
+import { photoSchema } from "../models/photos";
 
 mongoose.set("strictQuery", false);
 
@@ -46,7 +47,7 @@ productSchema.set("toJSON", {
       id?: string;
       _id?: mongoose.Types.ObjectId;
       __v?: number;
-    },
+  },
   ) => {
     returnedObject.id = returnedObject._id?.toString();
     delete returnedObject._id;

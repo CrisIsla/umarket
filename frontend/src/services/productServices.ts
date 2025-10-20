@@ -15,11 +15,12 @@ const ERROR_MESSAGES = {
   DELETE: "Request has failed",
 };
 
-export function createProduct(product: Omit<Product, "id">) {
-  return connectingWithServer<Omit<Product, "id">, Product>({
+/* Para enviar las fotos al backend */
+export function createProduct(product: FormData) {
+  return connectingWithServer<FormData, Product>({
     method: "post",
     url: "api/products",
-    data: product,
+    body: product,
     errorMessage: ERROR_MESSAGES.CREATE,
     successfulMessage: SUCCESSFULL_MESSAGES.CREATE,
   });

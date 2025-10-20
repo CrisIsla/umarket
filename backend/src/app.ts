@@ -6,7 +6,9 @@ import productRouter from "./controllers/product";
 import mongoose from "mongoose";
 import config from "./utils/config";
 import logger from "./utils/logger";
+
 import middleware from "./utils/middleware";
+
 const { MONGODB_DBNAME, MONGODB_URI } = config;
 const { requestLogger, errorHandler, unknownEndpoint } = middleware
 const app = express();
@@ -21,7 +23,6 @@ if (MONGODB_URI) {
 app.use(express.static("dist"));
 app.use(express.json());
 app.use(requestLogger)
-
 app.use(cookieParser());
 
 app.use("/api/products", productRouter);

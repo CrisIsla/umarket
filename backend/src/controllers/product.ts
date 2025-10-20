@@ -1,18 +1,22 @@
 import express from "express";
 import Product from "../models/products";
 import User from "../models/user";
-import jwt from "jsonwebtoken";
-import config from "../utils/config";
 import { withUser } from "../utils/authMiddleware";
+import multer from "multer";
 
 const router = express.Router();
 
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
 router.get("/", async (request, response) => {
-  const notes = await Product.find({}).populate("seller", {
+  const products = await Product.find({}).populate("seller", {
     username: 1,
     email: 1,
   });
-  response.json(notes);
+  response.json(products);
 });
 
 router.get("/:id", async (request, response, next) => {
@@ -28,51 +32,53 @@ router.get("/:id", async (request, response, next) => {
   }
 });
 
-router.post("/", withUser, async (request, response, next) => {
-  const body = request.body;
-  const user = await User.findById(request.userId);
+router.post(
+  "/",
+  /*withUser,*/
+  upload.array("photos", 5),
+  async (request, response, next) => {
+    const body = request.body;
+    const user = await User.findById(request.userId);
 
-  if (!user) {
-    response.status(400).json({
-      error: "user not found",
-    });
-  } else if (!body.title) {
-    response.status(400).json({
-      error: "title missing",
-    });
-  } else if (!body.description) {
-    response.status(400).json({
-      error: "description missing",
-    });
-  } else if (!body.price) {
-    response.status(400).json({
-      error: "price missing",
-    });
-  } else if (!body.condition) {
-    response.status(400).json({
-      error: "condition missing",
-    });
-  } else if (!body.category) {
-    response.status(400).json({
-      error: "category missing",
-    });
-  } else {
-    const product = {
-      title: body.title,
-      description: body.description,
-      date: new Date(),
-      condition: body.condition,
-      price: body.price,
-      category: body.category,
-      tags: body.tags,
-      photos: [],
-      seller: user.id,
-    };
+    const files = (request.files as Express.Multer.File[]) || [];
+    const requiredFields = [
+      "title",
+      "description",
+      "price",
+      "condition",
+      "category",
+    ];
+    for (const field of requiredFields) {
+      if (!body[field]) {
+        return response.status(400).json({ error: `${field} missing` });
+      }
+    }
+    if (!user) {
+      response.status(400).json({
+        error: "user not found",
+      });
+    } else {
+      const product = {
+        title: body.title,
+        description: body.description,
+        date: new Date(),
+        condition: body.condition,
+        price: body.price,
+        category: body.category,
+        tags: body.tags,
+        photos: files.map((file) => {
+          const buffer = file.buffer;
+          const base64String = 'data:img/png;base64,' + Buffer.from(buffer).toString('base64');
+          return base64String;
+        }),
+        seller: user.id,
+      };
 
-    const savedProduct = await new Product(product).save();
+      const savedProduct = await new Product(product).save();
 
-    response.status(201).json(savedProduct);
-  }
-});
+      response.status(201).json(savedProduct);
+    }
+  },
+);
 
 export default router;
