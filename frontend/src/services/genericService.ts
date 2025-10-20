@@ -1,4 +1,4 @@
-import { api } from "./api_config";
+import api from "./api_config";
 
 interface ApiRequest<T>{
     method: 'get' | 'post' | 'put' | 'delete';
