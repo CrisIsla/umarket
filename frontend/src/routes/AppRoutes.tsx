@@ -10,7 +10,6 @@ export const AppRoutes = () => {
   const [csrfToken, setCsrfToken] = useState<string|null>(localStorage.getItem('csrfToken'));
 
   useEffect(() => {
-    console.log(csrfToken);
     if (!csrfToken) {
       return;
     }
