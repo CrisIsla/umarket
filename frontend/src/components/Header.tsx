@@ -1,24 +1,21 @@
 import { ShoppingCart, Search } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-type HeaderProps = {
-  onSearch: (query: string) => void;
-};
-
-export default function Header({ onSearch }: HeaderProps) {
+export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && searchTerm.trim() !== "") {
-      onSearch(searchTerm);
-      setSearchTerm("");
+  const handleSearch = () => {
+    if (searchTerm.trim() === "") return;
+    if (location.pathname !== "/") {
+      navigate(`/?search=${encodeURIComponent(searchTerm)}`, { replace: true });
+    } else {
+      navigate(`/?search=${encodeURIComponent(searchTerm)}`);
     }
+    setSearchTerm("");
   };
 
   return (
@@ -36,12 +33,12 @@ export default function Header({ onSearch }: HeaderProps) {
             placeholder="Buscar..."
             className="w-full px-4 py-2 rounded-full text-black focus:outline-none"
             value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyDown}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' ? handleSearch() : null}
           />
           <button type="button" 
           style={{ outline: "none", boxShadow: "none" }}
-          onClick={() => {if (searchTerm.trim() !== "") onSearch(searchTerm); }}
+          onClick={handleSearch}
           className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
             <Search className="h-5 w-5" />
           </button>

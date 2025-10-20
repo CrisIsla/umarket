@@ -5,14 +5,18 @@ import type { Product } from "../interfaces/product.ts";
 import { LayoutGridIcon, List } from "lucide-react";
 import ProductCardGrid from "@/components/ProductCardGrid.tsx";
 import ProductComponent from "@/components/ProductComponent.tsx";
+import { useLocation } from "react-router-dom";
 
 export default function Home() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const seachFromURL = queryParams.get("search") || "";
   // States
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState(seachFromURL);
 
   // States for sorting and filters
   const [sortOption, setSortOption] = useState<string>("recientes");
@@ -60,13 +64,19 @@ export default function Home() {
         setError("Error fetching products");
       });
   }, []);
+
+  // Sync searchQuery with URL param
   useEffect(() => {
-    // Limpia los filtros y búsqueda al montar Home
-    setActiveCondition(null);
-    setActiveCategory(null);
-    setActiveTags([]);
-    setSearchQuery("");
-  }, []);
+    setSearchQuery(seachFromURL);
+  }, [location.search]);
+
+  // useEffect(() => {
+  //   // Limpia los filtros y búsqueda al montar Home
+  //   setActiveCondition(null);
+  //   setActiveCategory(null);
+  //   setActiveTags([]);
+  //   setSearchQuery("");
+  // }, []);
 
   // Compute counts for filters
   const conditionCounts = filteredProducts.reduce((acc, product) => {
@@ -135,7 +145,7 @@ export default function Home() {
 
   return (
     <>
-      <Header onSearch={handleSearch} />
+      <Header />
       <div className="flex w-screen mx-auto pt-12">
         {/* Filters */}
         <div className="pt-8 pr-4 ml-20">
