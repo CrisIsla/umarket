@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import { login } from "@/services/loginService";
 import { useForm } from "@/hooks/useForm";
@@ -15,7 +15,11 @@ const initialFormData: LoginFormData = {
   password: "",
 };
 
-export const LoginForm = () => {
+interface Props {
+  setCsrfToken : Dispatch<SetStateAction<string | null>>
+}
+
+export const LoginForm = ({setCsrfToken}: Props) => {
   const { formState, onInputChange, onResetForm } =
     useForm<LoginFormData>(initialFormData);
 
@@ -31,9 +35,9 @@ export const LoginForm = () => {
         email: formState.email,
         password: formState.password,
       });
-
-      navigate("/");
       onResetForm();
+      navigate("/");
+      setCsrfToken(localStorage.getItem('csrfToken'));
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("Credenciales invalidas");

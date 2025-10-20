@@ -44,7 +44,7 @@ export const RegisterForm = () => {
         password: formState.password,
       });
       onResetForm();
-      navigate("/");
+      navigate("/login");
     } catch (exception) {
       setErrorMessage("Error al crear la cuenta");
       setTimeout(() => setErrorMessage(null), 5000);

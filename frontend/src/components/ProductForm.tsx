@@ -1,6 +1,7 @@
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 import { createProduct } from "@/services/productServices";
+import { useNavigate } from "react-router";
 
 interface ProductFormData {
   name: string;
@@ -42,6 +43,7 @@ const statuses = [
 export const ProductForm: React.FC = () => {
   const { formState, onInputChange, onImageChange, imageCount, onRemoveImage, onResetForm } =
     useForm<ProductFormData>(initialFormData);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,6 +75,7 @@ export const ProductForm: React.FC = () => {
     });
     createProduct(productData)
     onResetForm();
+    navigate("/");
   };
 
   return (
