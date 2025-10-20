@@ -15,11 +15,12 @@ const ERROR_MESSAGES = {
   DELETE: "Request has failed",
 };
 
-export function createProduct(product: Omit<Product, "id">) {
-  return connectingWithServer<Omit<Product, "id">, Product>({
+/* Para enviar las fotos al backend */
+export function createProduct(product: FormData) {
+  return connectingWithServer<FormData, Product>({
     method: "post",
-    url: "/products",
-    data: product,
+    url: "/api/products",
+    body: product,
     errorMessage: ERROR_MESSAGES.CREATE,
     successfulMessage: SUCCESSFULL_MESSAGES.CREATE,
   });
@@ -31,7 +32,7 @@ export function getProducts(
 ): Promise<ApiResponse<Product[]>> {
   return connectingWithServer<void, Product[]>({
     method: "get",
-    url: "/products",
+    url: "/api/products",
     successfulMessage: SUCCESSFULL_MESSAGES.GET_ALL,
     errorMessage: ERROR_MESSAGES.GET_ALL,
     ...(page && limit ? { params: { page, limit } } : {}),
@@ -41,7 +42,7 @@ export function getProducts(
 export function getProductById({ id }: Pick<Product, "id">) {
   return connectingWithServer<void, Product>({
     method: "get",
-    url: `/products/${id}`,
+    url: `/api/products/${id}`,
     successfulMessage: SUCCESSFULL_MESSAGES.GET,
     errorMessage: ERROR_MESSAGES.GET,
   });
@@ -50,7 +51,7 @@ export function getProductById({ id }: Pick<Product, "id">) {
 export function deleteProductById({ id }: Pick<Product, "id">) {
   return connectingWithServer<void, Product>({
     method: "delete",
-    url: `/products/${id}`,
+    url: `api/products/${id}`,
     successfulMessage: SUCCESSFULL_MESSAGES.DELETE,
     errorMessage: ERROR_MESSAGES.DELETE,
   });

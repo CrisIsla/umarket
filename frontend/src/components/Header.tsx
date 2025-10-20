@@ -47,8 +47,8 @@ export default function Header() {
 
       {/* Actions */}
       <nav className="flex items-center space-x-12 px-6 py-2">
-        <Link to="/products/new" className="text-white">Vender</Link>
-        <Link to="/inicio-sesion" className="text-white">Iniciar sesión</Link>
+        <Link to="/new/product" className="text-white">Vender</Link>
+        <Link to="/login" className="text-white">Iniciar sesión</Link>
         <Link to="/carrito" className="text-white flex items-center space-x-1">
           <ShoppingCart className="h-5 w-5" />
           <span>Carrito</span>

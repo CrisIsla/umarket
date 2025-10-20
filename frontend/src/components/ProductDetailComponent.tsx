@@ -1,7 +1,7 @@
 import type { Product } from "@/interfaces/product";
 import { useEffect, useState } from "react";
 import { getProductById } from "../services/productServices";
-import { getUserById } from "../services/userServices";
+// import { getUserById } from "../services/userServices";
 import PhotosGalleryComponent from "./PhotosGalleryComponent";
 import { Button } from "./Button";
 
@@ -11,7 +11,7 @@ interface ProductDetailComponentProps {
 
 const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
   const [product, setProduct] = useState<Product | null>(null);
-  const [sellerName, setSellerName] = useState<string>("");
+  // const [sellerName, setSellerName] = useState<string>("");
   const [showMore, setShowMore] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,15 +24,15 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (!product) return;
-    getUserById({ id: product.seller }).then((response) => {
-      if (response.data === undefined) {
-        throw new Error(`Error getting seller with id ${id}`);
-      }
-      setSellerName(response.data.name);
-    });
-  }, [product]);
+  // useEffect(() => {
+  //   if (!product) return;
+  //   getUserById({ id: product.seller.id }).then((response) => {
+  //     if (response.data === undefined) {
+  //       throw new Error(`Error getting seller with id ${id}`);
+  //     }
+  //     setSellerName(response.data.name);
+  //   });
+  // }, [product]);
 
   if (product === null) return <h1>Cargando detalle de producto...</h1>;
 
@@ -67,7 +67,9 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
             {showMore ? "Mostrar menos" : "Mostrar más"}
           </Button>
         )}
-        <p className="text-sm text-gray-600">Vendido por: {sellerName}</p>
+        {/* <p className="text-sm text-gray-600">Vendido por: {sellerName}</p> */}
+        <p className="text-sm text-gray-600">Vendido por: {product.seller.name}</p>
+        <p className="text-sm text-gray-600">Contacto: {product.seller.contact.email}</p>
         {/*PLACEHOLDER*/}
         <div className="flex gap-4 pt-4">
           <Button className="px-8 py-3">Comprar</Button>
