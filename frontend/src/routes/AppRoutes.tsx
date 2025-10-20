@@ -1,14 +1,20 @@
 import { Routes, Route, Navigate } from "react-router";
 import { ProtectedRoutes } from "@/components/ProtectedRoutes";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
-import { useCheckAuth } from "@/hooks/useCheckAuth";
 import Home from "@/views/Home";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { LoginPage } from "@/pages/LoginPage";
+import { useEffect, useState } from "react";
 
 export const AppRoutes = () => {
-  
-  const { status } = useCheckAuth();
+  const [csrfToken, setCsrfToken] = useState<string|null>(localStorage.getItem('csrfToken'));
+
+  useEffect(() => {
+    console.log(csrfToken);
+    if (!csrfToken) {
+      return;
+    }
+  }, [csrfToken])
 
   return (
     <Routes>
@@ -19,7 +25,7 @@ export const AppRoutes = () => {
       <Route
         path="/new/*"
         element={
-          status === "authenticated" ? (
+          csrfToken ? (
             <ProtectedRoutes />
           ) : (
             <Navigate to="/login" replace />
@@ -31,7 +37,7 @@ export const AppRoutes = () => {
       <Route
         path="/register"
         element={
-          status === "authenticated" ? (
+          csrfToken ? (
             <Navigate to="/" replace />
           ) : (
             <RegisterPage />
@@ -41,10 +47,10 @@ export const AppRoutes = () => {
       <Route
         path="/login"
         element={
-          status === "authenticated" ? (
+          csrfToken ? (
             <Navigate to="/" replace />
           ) : (
-            <LoginPage />
+            <LoginPage setCsrfToken={setCsrfToken}/>
           )
         }
       />
