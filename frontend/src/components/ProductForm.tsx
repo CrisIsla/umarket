@@ -62,7 +62,6 @@ export const ProductForm: React.FC = () => {
     productData.append("title", dataToSend.name)
     productData.append("date", new Date().toLocaleString())
     productData.append("description", dataToSend.description)
-    productData.append("seller", "1")
     dataToSend.images.forEach(image => {
       productData.append("photos", image)
     });

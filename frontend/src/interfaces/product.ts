@@ -1,11 +1,11 @@
-import type { User } from "./user";
+import type { Seller } from "./user";
 
 export interface Product {
   readonly id: string;
   title: string;
   date: string | Date;
   description: string;
-  seller: User["id"];
+  seller: Seller;
   photos: string[] | [];
   condition: "new" | "used";
   price: number;
