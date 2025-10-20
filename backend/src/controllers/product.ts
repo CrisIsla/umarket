@@ -13,8 +13,8 @@ const upload = multer({
 
 router.get("/", async (request, response) => {
   const products = await Product.find({}).populate("seller", {
-    username: 1,
-    email: 1,
+    name: 1,
+    contact: 1,
   });
   response.json(products);
 });
@@ -22,8 +22,8 @@ router.get("/", async (request, response) => {
 router.get("/:id", async (request, response, next) => {
   const id = request.params.id;
   const product = await Product.findById(id).populate("seller", {
-    username: 1,
-    email: 1,
+    name: 1,
+    contact: 1,
   });
   if (product) {
     response.json(product);
@@ -34,7 +34,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post(
   "/",
-  /*withUser,*/
+  withUser,
   upload.array("photos", 5),
   async (request, response, next) => {
     const body = request.body;
