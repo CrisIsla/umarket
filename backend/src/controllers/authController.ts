@@ -7,8 +7,8 @@ import User from "../models/user";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
-    const { name, contact, password } = req.body;
-    if (!name || !contact?.email || !password) {
+    const { username, contact, password } = req.body;
+    if (!username || !contact?.email || !password) {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = await User.create({
-      name,
+      name:username,
       contact,
       password: passwordHash,
     });
