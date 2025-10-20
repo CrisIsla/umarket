@@ -1,5 +1,10 @@
 # Backend
-Execute
+Install dependencies
 ```bash
-    npx json-server --port 3001 db.json
+    npm install
 ```
+Then
+```bash
+    npm run dev
+```
+Should see `Server running on port 3001`.
