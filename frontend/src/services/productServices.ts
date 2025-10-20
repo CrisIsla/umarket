@@ -19,7 +19,7 @@ const ERROR_MESSAGES = {
 export function createProduct(product: FormData) {
   return connectingWithServer<FormData, Product>({
     method: "post",
-    url: "api/products",
+    url: "/api/products",
     body: product,
     errorMessage: ERROR_MESSAGES.CREATE,
     successfulMessage: SUCCESSFULL_MESSAGES.CREATE,
@@ -32,7 +32,7 @@ export function getProducts(
 ): Promise<ApiResponse<Product[]>> {
   return connectingWithServer<void, Product[]>({
     method: "get",
-    url: "api/products",
+    url: "/api/products",
     successfulMessage: SUCCESSFULL_MESSAGES.GET_ALL,
     errorMessage: ERROR_MESSAGES.GET_ALL,
     ...(page && limit ? { params: { page, limit } } : {}),
@@ -42,7 +42,7 @@ export function getProducts(
 export function getProductById({ id }: Pick<Product, "id">) {
   return connectingWithServer<void, Product>({
     method: "get",
-    url: `api/products/${id}`,
+    url: `/api/products/${id}`,
     successfulMessage: SUCCESSFULL_MESSAGES.GET,
     errorMessage: ERROR_MESSAGES.GET,
   });

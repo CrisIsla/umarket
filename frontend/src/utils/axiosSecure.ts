@@ -2,6 +2,9 @@ import axios from "axios";
 
 const axiosSecure = axios.create({
     withCredentials: true,
+    headers: {
+        'Accept': 'application/json',
+    }
 });
 
 
