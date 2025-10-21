@@ -39,14 +39,14 @@ export const register = async (credentials: RegisterCredentials) => {
 
 export const restoreLogin = async () => {
     try {
-        const response = await axiosSecure.get("/api/login/me");
-        return response.data;
+        const response = await axiosSecure.get("/api/auth/me");
+        return { data: response.data, success: true };
     } catch {
         return null;
     }
 };
 
 export const logout = async () => {
-    await axios.post("/api/login/logout");
+    await axiosSecure.post("/api/auth/logout");
     localStorage.removeItem("csrfToken");
 };
