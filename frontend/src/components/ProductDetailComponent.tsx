@@ -4,6 +4,7 @@ import { getProductById } from "../services/productServices";
 // import { getUserById } from "../services/userServices";
 import PhotosGalleryComponent from "./PhotosGalleryComponent";
 import { Button } from "./Button";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductDetailComponentProps {
   id: string;
@@ -13,7 +14,7 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   // const [sellerName, setSellerName] = useState<string>("");
   const [showMore, setShowMore] = useState<boolean>(false);
-
+  const { addToCart } = useCart()
   useEffect(() => {
     if (!id) throw new Error("parameter id was not provided");
     getProductById({ id: id }).then((response) => {
@@ -55,7 +56,7 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
             {product.condition === "new" ? "Nuevo" : "Usado"}
           </p>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">${product.price}</h1>
+        <h1 className="text-3xl font-bold text-gray-900">${new Intl.NumberFormat('es-CL').format(product.price)}</h1>
         <h3 className="text-base leading-relaxed text-gray-700">
           {descriptionLength > maximumDescriptonLength && !showMore
             ? product.description.slice(0, maximumDescriptonLength) + "..."
@@ -73,7 +74,7 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
         {/*PLACEHOLDER*/}
         <div className="flex gap-4 pt-4">
           <Button className="px-8 py-3">Comprar</Button>
-          <Button className="px-8 py-3">Agregar al carrito</Button>
+          <Button className="px-8 py-3" onClick={() => addToCart(product)}>Agregar al carrito</Button>
         </div>
       </div>
     </div>
