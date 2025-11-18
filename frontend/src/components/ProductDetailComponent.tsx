@@ -5,6 +5,8 @@ import { getProductById } from "../services/productServices";
 import PhotosGalleryComponent from "./PhotosGalleryComponent";
 import { Button } from "./Button";
 import { useCart } from "@/hooks/useCart";
+import Checkout from "./Checkout";
+import { useCheckout } from "@/hooks/useCheckout";
 
 interface ProductDetailComponentProps {
   id: string;
@@ -14,7 +16,14 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   // const [sellerName, setSellerName] = useState<string>("");
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { addToCart } = useCart()
+  const { addToCart } = useCart();
+  const { openModal, addToProducts } = useCheckout();
+  const proceedToCheckout = () => {
+    if (product) {
+      addToProducts([{ ...product, quantity: 1 }]);
+      openModal();
+    }
+  }
   useEffect(() => {
     if (!id) throw new Error("parameter id was not provided");
     getProductById({ id: id }).then((response) => {
@@ -69,14 +78,15 @@ const ProductDetailComponent = ({ id }: ProductDetailComponentProps) => {
           </Button>
         )}
         {/* <p className="text-sm text-gray-600">Vendido por: {sellerName}</p> */}
-        <p className="text-sm text-gray-600">Vendido por: {product.seller.name}</p>
-        <p className="text-sm text-gray-600">Contacto: {product.seller.contact.email}</p>
+        <p className="text-sm text-gray-600">Vendido por: {product.seller?.name}</p>
+        <p className="text-sm text-gray-600">Contacto: {product.seller?.contact.email}</p>
         {/*PLACEHOLDER*/}
         <div className="flex gap-4 pt-4">
-          <Button className="px-8 py-3">Comprar</Button>
+          <Button className="px-8 py-3" onClick={proceedToCheckout}>Comprar</Button>
           <Button className="px-8 py-3" onClick={() => addToCart(product)}>Agregar al carrito</Button>
         </div>
       </div>
+      <Checkout />
     </div>
   );
 };
