@@ -1,10 +1,6 @@
-import type { Product } from "@/interfaces/product"
+import type { Product, ProductCart } from "@/interfaces/product"
 import { create } from "zustand"
 import { persist } from "zustand/middleware";
-
-export interface ProductCart extends Product {
-    quantity: number;
-}
 
 interface State {
     cart: ProductCart[],

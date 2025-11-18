@@ -1,7 +1,10 @@
 import { useCart } from "@/hooks/useCart";
 import { Button } from "./Button";
-import type { ProductCart } from "@/store/cart";
 import { ShoppingCart } from "lucide-react";
+import type { ProductCart } from "@/interfaces/product";
+import { useCheckout } from "@/hooks/useCheckout";
+import Checkout from "./Checkout";
+import { useEffect } from "react";
 
 type ProductItemCart = ProductCart & { addToCart: () => void, decrementFromCart: () => void }
 function CartItem({ photos, price, title, quantity, condition, addToCart, decrementFromCart }: ProductItemCart) {
@@ -34,8 +37,20 @@ function CartItem({ photos, price, title, quantity, condition, addToCart, decrem
 }
 
 export function Cart() {
-	const { cart, clearCart, addToCart, showCart, decrementFromCart } = useCart()
+	const { cart, clearCart, addToCart, showCart, decrementFromCart, changeDisplayCart } = useCart()
 	const total = cart.map((item) => (item.price * item.quantity)).reduce((acc, val) => acc + val, 0);
+	const { addToProducts, openModal, isPaid } = useCheckout();
+	const proceedToCheckout = () => {
+		if (cart.length > 0) {
+			addToProducts([...cart]);
+			changeDisplayCart();
+			openModal();
+		}
+	}
+	useEffect(() => {
+		if (!isPaid) return
+		clearCart();
+	}, [isPaid]);
 	return (
 		<>
 			{showCart && <aside className="p-8 pr-1 fixed right-0 top-0 bg-gray-50/90 w-1/4 z-998 flex-col h-full border-l">
@@ -67,13 +82,14 @@ export function Cart() {
 								<Button onClick={clearCart} className="p-2">
 									Limpiar Carrito
 								</Button>
-								<Button className="p-2">
+								<Button className="p-2" onClick={proceedToCheckout}>
 									Finalizar Compra
 								</Button>
 							</footer>
 						</div>)
 				}
 			</aside>}
+			<Checkout />
 		</>
 	);
 };
