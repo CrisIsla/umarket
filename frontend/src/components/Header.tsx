@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useCart } from "@/hooks/useCart";
+import { useCredentials } from "@/hooks/useCredentials";
 import { Button } from "./Button";
 
 export default function Header() {
@@ -10,7 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { changeDisplayCart } = useCart()
-
+  const { user, handleLogout } = useCredentials();
   const handleSearch = () => {
     if (searchTerm.trim() === "") return;
     if (location.pathname !== "/") {
@@ -51,7 +52,7 @@ export default function Header() {
       {/* Actions */}
       <nav className="flex items-center space-x-12 px-6 py-2">
         <Link to="/new/product" className="text-white">Vender</Link>
-        <Link to="/login" className="text-white">Iniciar sesión</Link>
+        {user ? <><p>Hola, {user.name}!</p> <Button onClick={handleLogout}>Cerrar Sesión</Button></>: <Link to="/login" className="text-white">Iniciar sesión</Link>}
         <Button onClick={changeDisplayCart} className="text-white flex items-center space-x-1">
           <ShoppingCart className="h-5 w-5" />
           <span>Carrito</span>
