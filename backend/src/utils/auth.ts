@@ -16,6 +16,13 @@ function addTokenToResponse( response: Response, user: User){
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
     });
+    
+    response.cookie("csrf", userForToken.csrf, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'lax',
+        path: '/',
+    });
 
     return response;
 };
