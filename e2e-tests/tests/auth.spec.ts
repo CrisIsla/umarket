@@ -6,6 +6,7 @@ test.describe("auth", () => {
     const Correo = "User@ug.uchile.cl";
     const Contraseña = "Contraseña";
     test.beforeEach(async ({ request }) => {
+      await request.post("http://localhost:3001/api/testing/reset");
       await request.post("http://localhost:3001/api/auth/register", {
         data: {
           username: Nombre,
@@ -28,18 +29,18 @@ test.describe("auth", () => {
       await page.goto("http://localhost:5173/new/product");
       await expect(page).toHaveURL("http://localhost:5173/new/product");
       const headerNav = page.locator("header nav");
-    //   se ve el cierre de sesion y el nombre del usuario
+      //   se ve el cierre de sesion y el nombre del usuario
       await expect(
-        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first()
+        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first(),
       ).toBeVisible();
       await expect(headerNav.getByText(Nombre).first()).toBeVisible();
     });
     test("Flujo incorrecto login", async ({ page }) => {
-    //   usuario no registrado
+      //   usuario no registrado
       const Nombre = `user-${Date.now()}`;
       const Correo = `${Nombre}@ug.uchile.cl`;
       const Contraseña = "Contraseña";
-    
+
       await page.goto("http://localhost:5173/login");
       await page.getByPlaceholder("Correo").fill(Correo);
       await page
@@ -49,7 +50,7 @@ test.describe("auth", () => {
 
       const headerNav = page.locator("header nav");
       await expect(
-        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first()
+        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first(),
       ).toHaveCount(0);
       await expect(headerNav.getByText(Nombre)).toHaveCount(0);
     });
