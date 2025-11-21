@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useCart } from "@/hooks/useCart";
-import { useCredentials } from "@/hooks/useCredentials";
 import { Button } from "./Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { startLogout } from "@/store/auth/thunks";
@@ -13,14 +12,13 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { changeDisplayCart } = useCart()
-  const { user, handleLogout } = useCredentials();
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
   const user = auth.displayName
     ? { name: auth.displayName, email: auth.email }
     : auth.email
-    ? { name: auth.email, email: auth.email }
-    : null;
+      ? { name: auth.email, email: auth.email }
+      : null;
   const handleSearch = () => {
     if (searchTerm.trim() === "") return;
     if (location.pathname !== "/") {
