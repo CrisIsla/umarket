@@ -2,18 +2,18 @@ import type { User } from "@/interfaces/user";
 import { logout, restoreLogin } from "@/services/loginService";
 import { useEffect, useState } from "react";
 
-export function useCredentials(){
-    const [user, setUser] = useState<User|null>(null);
+export function useCredentials() {
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>('');
-    const [csrfToken] = useState<string|null>(localStorage.getItem('csrfToken'));
-    useEffect(()=>{
-        if (!csrfToken) return;
+    const [csrfToken] = useState<string | null>(localStorage.getItem('csrfToken'));
+    useEffect(() => {
+        if (!csrfToken || user) return;
         setLoading(true);
         async function getUserInfo() {
-            try{
+            try {
                 const response = await restoreLogin();
-                if (response?.success && response?.data){
+                if (response?.success && response?.data) {
                     setUser(response.data)
                 } else {
                     setError('Error en el servicio.');

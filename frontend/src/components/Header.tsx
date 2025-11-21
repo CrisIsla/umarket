@@ -2,6 +2,8 @@ import { ShoppingCart, Search } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useCart } from "@/hooks/useCart";
+import { useCredentials } from "@/hooks/useCredentials";
 import { Button } from "./Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { startLogout } from "@/store/auth/thunks";
@@ -10,6 +12,8 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const { changeDisplayCart } = useCart()
+  const { user, handleLogout } = useCredentials();
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
   const user = auth.displayName
@@ -49,12 +53,10 @@ export default function Header() {
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => (e.key === "Enter" ? handleSearch() : null)}
           />
-          <button
-            type="button"
+          <button type="button"
             style={{ outline: "none", boxShadow: "none" }}
             onClick={handleSearch}
-            className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0"
-          >
+            className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
             <Search className="h-5 w-5" />
           </button>
         </div>
@@ -77,10 +79,10 @@ export default function Header() {
             Iniciar sesión
           </Link>
         )}
-        <Link to="/carrito" className="text-white flex items-center space-x-1">
+        <Button onClick={changeDisplayCart} className="text-white flex items-center space-x-1">
           <ShoppingCart className="h-5 w-5" />
           <span>Carrito</span>
-        </Link>
+        </Button>
       </nav>
     </header>
   );
