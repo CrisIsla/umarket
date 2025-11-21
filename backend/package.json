@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "cross-env NODE_ENV=production node out/index.js",
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
+    "test": "cross-env NODE_ENV=test tsx --test --test-concurrency=1 test/**/*.test.ts",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+    "start:test": "cross-env NODE_ENV=test ts-node-dev src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +29,7 @@
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
