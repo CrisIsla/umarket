@@ -1,6 +1,7 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { login } from "@/services/loginService";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { startLogin } from "@/store/auth/thunks";
 import { useForm } from "@/hooks/useForm";
 import { Button } from "./Button";
 
@@ -15,35 +16,36 @@ const initialFormData: LoginFormData = {
   password: "",
 };
 
-interface Props {
-  setCsrfToken : Dispatch<SetStateAction<string | null>>
-}
-
-export const LoginForm = ({setCsrfToken}: Props) => {
+export const LoginForm = () => {
   const { formState, onInputChange, onResetForm } =
     useForm<LoginFormData>(initialFormData);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.auth.status);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
-
     try {
-      await login({
-        email: formState.email,
-        password: formState.password,
-      });
+      await dispatch(
+        startLogin({
+          email: formState.email,
+          password: formState.password,
+        })
+      );
       onResetForm();
-      navigate("/");
-      setCsrfToken(localStorage.getItem('csrfToken'));
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("Credenciales invalidas");
       setTimeout(() => setErrorMessage(null), 4000);
     }
   };
+
+  if (authStatus === "authenticated") {
+    navigate("/");
+  }
 
   return (
     <div className="mt-8">

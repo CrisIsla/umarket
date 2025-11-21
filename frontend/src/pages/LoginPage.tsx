@@ -1,18 +1,14 @@
 import { LoginForm } from "@/components/LoginForm";
 import logo from "../assets/logo.svg";
-import type { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router";
 
-interface Props {
-  setCsrfToken : Dispatch<SetStateAction<string | null>>
-}
-
-export const LoginPage = ({setCsrfToken}: Props) => {
+export const LoginPage = () => {
   return (
     <div className="flex flex-col items-center p-5 mt-8">
-      <a href="/">
-        <img className="w-44 h-auto" src={logo} alt="U-Market" />
-      </a>
-      <LoginForm setCsrfToken={setCsrfToken}/>
+      <Link to="/" className="flex items-center px-4 py-1">
+        <img src={logo} alt="Umarket Logo" className="w-44 h-auto" />
+      </Link>
+      <LoginForm />
     </div>
   );
 };
