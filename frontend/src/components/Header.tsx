@@ -67,7 +67,7 @@ export default function Header() {
         </Link>
         {user ? (
           <>
-            <p>{user.name}!</p>
+            <p>{user.name}</p>
             <Button onClick={() => dispatch(startLogout())}>
               Cerrar Sesión
             </Button>
