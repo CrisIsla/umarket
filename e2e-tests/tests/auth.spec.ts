@@ -82,7 +82,34 @@ test.describe("auth", () => {
       await expect(headerNav.getByText(Nombre).first()).toBeVisible();
     });
     test("Flujo logout", async ({ page }) => {
-      //
+      const Nombre = "User";
+      const Correo = "User@ug.uchile.cl";
+      const Contraseña = "Contraseña";
+
+      await page.goto("http://localhost:5173/login");
+      await page.getByPlaceholder("Correo").fill(Correo);
+      await page.getByPlaceholder("Contraseña", { exact: true }).fill(Contraseña);
+      await page.getByRole("button", { name: "Iniciar sesión" }).click();
+
+      await page.waitForURL("**/");
+      // Usuario debe estar logeado
+      const headerNav = page.locator("header nav");
+      await expect(
+        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first(),
+      ).toBeVisible();
+      await expect(headerNav.getByText(Nombre).first()).toBeVisible();
+      // Hacer logout
+      await headerNav.getByRole("button", { name: "Cerrar Sesión" }).click();
+      await page.waitForURL("**/login");
+      // Usuario debe estar deslogeado
+      await expect(
+        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first(),
+      ).toHaveCount(0);
+      await expect(headerNav.getByText(Nombre)).toHaveCount(0);
+      // Verificar que aparece "Iniciar sesión"
+      await expect(
+        headerNav.getByRole("button", { name: "Iniciar sesión" }).first(),
+      ).toBeVisible();
     });
   });
 });
