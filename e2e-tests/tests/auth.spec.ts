@@ -55,7 +55,31 @@ test.describe("auth", () => {
       await expect(headerNav.getByText(Nombre)).toHaveCount(0);
     });
     test("Flujo registro", async ({ page }) => {
-      //
+      const Nombre = `user-${Date.now()}`;
+      const Correo = `${Nombre}@ug.uchile.cl`;
+      const Contraseña = "Contraseña";
+
+      await page.goto("http://localhost:5173/register");
+      await page.getByPlaceholder("Correo").fill(Correo);
+      await page.getByPlaceholder("Nombre").fill(Nombre);
+      await page.getByPlaceholder("Contraseña", { exact: true }).fill(Contraseña);
+      await page.getByPlaceholder("Repetir contraseña").fill(Contraseña);
+      await page.getByRole("button", { name: "Crear cuenta" }).click();
+
+      await page.waitForURL("**/login");
+
+      // Login con los datos recien creados
+      await page.getByPlaceholder("Correo").fill(Correo);
+      await page.getByPlaceholder("Contraseña", { exact: true }).fill(Contraseña);
+      await page.getByRole("button", { name: "Iniciar sesión" }).click();
+
+      await page.waitForURL("**/");
+      // Usuario aparece como logeado
+      const headerNav = page.locator("header nav");
+      await expect(
+        headerNav.getByRole("button", { name: "Cerrar Sesión" }).first(),
+      ).toBeVisible();
+      await expect(headerNav.getByText(Nombre).first()).toBeVisible();
     });
     test("Flujo logout", async ({ page }) => {
       //
