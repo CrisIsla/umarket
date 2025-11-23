@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(cookieParser());
 
-if (process.env.NODE_ === "test") {
+if (process.env.NODE_ENV === "test") {
   app.use("/api/testing", testRouter);
 }
 app.use("/api/products", productRouter);
@@ -36,4 +36,3 @@ app.use(authErrorHandler);
 app.use(unknownEndpoint);
 app.use(errorHandler);
 export default app;
-
