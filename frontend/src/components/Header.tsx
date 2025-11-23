@@ -42,7 +42,7 @@ export default function Header() {
           style={{ outline: "none", boxShadow: "none" }}
           onClick={handleSearch}
           className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
-            <Search className="h-5 w-5" />
+            <Search className="h-6 w-10 mt-2" />
           </button>
         </div>
       </div>
