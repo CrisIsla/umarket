@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router";
 import { ProtectedRoutes } from "@/components/ProtectedRoutes";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
+import { ProfilePage } from "@/pages/ProfilePage";
+import { ModifyProductPage } from "@/pages/ModifyProductPage";
 import Home from "@/views/Home";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { LoginPage } from "@/pages/LoginPage";
@@ -19,6 +21,8 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/products/:id" element={<ProductDetailPage />} />
+      <Route path="/profile/:userId" element={<ProfilePage />} />
+      <Route path="/products/edit/:id" element={<ModifyProductPage />} />
 
       {/* Protected routes */}
       <Route

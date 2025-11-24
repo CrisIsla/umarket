@@ -12,10 +12,19 @@ const upload = multer({
 });
 
 router.get("/", async (request, response) => {
-  const products = await Product.find({}).populate("seller", {
-    name: 1,
-    contact: 1,
-  });
+  const sellerId = request.query.seller as string | undefined;
+  let products;
+  if (sellerId) {
+    products = await Product.find({ seller: sellerId }).populate("seller", {
+      name: 1,
+      contact: 1,
+    });
+  } else {
+    products = await Product.find({}).populate("seller", {
+      name: 1,
+      contact: 1,
+    });
+  }
   response.json(products);
 });
 
@@ -80,5 +89,46 @@ router.post(
     }
   },
 );
+
+router.delete("/:id", withUser, async (request, response) => {
+  const productId = request.params.id;
+  const userId = request.userId;
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    return response.status(404).json({ error: "Producto no encontrado" });
+  }
+
+  if (product.seller.toString() !== userId) {
+    return response.status(403).json({ error: "No tienes permiso para eliminar este producto" });
+  }
+
+  await Product.findByIdAndDelete(productId);
+  response.status(204).end();
+});
+
+router.patch("/:id", withUser, upload.array("photos", 5), async (request, response) => {
+  const productId = request.params.id;
+  const userId = request.userId;
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    return response.status(404).json({ error: "Producto no encontrado" });
+  }
+  if (product.seller.toString() !== userId) {
+    return response.status(403).json({ error: "No tienes permiso para modificar este producto" });
+  }
+
+  const updateFields: any = {};
+  const allowedFields = ["title", "description", "price", "condition", "category", "tags"];
+  allowedFields.forEach(field => {
+    if (request.body[field]) {
+      updateFields[field] = request.body[field];
+    }
+  });
+
+  const updatedProduct = await Product.findByIdAndUpdate(productId, updateFields, { new: true });
+  response.json(updatedProduct);
+});
 
 export default router;

@@ -1,14 +1,16 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import axiosSecure from "@/utils/axiosSecure";
 
+type ParamsTypes =
+  | { page: number; limit: number }
+  | { seller: string }
+  | undefined;
+
 interface ApiRequest<T>{
-    method: 'get' | 'post' | 'put' | 'delete';
+    method: 'get' | 'post' | 'put' | 'delete' | 'patch';
     url: string;
     body?: T | FormData;
-    params?: {
-        page: number,
-        limit: number
-    },
+    params?: ParamsTypes;
     successfulMessage: string;
     errorMessage: string;
 }

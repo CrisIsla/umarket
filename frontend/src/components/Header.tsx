@@ -50,7 +50,16 @@ export default function Header() {
       {/* Actions */}
       <nav className="flex items-center space-x-12 px-6 py-2">
         <Link to="/new/product" className="text-white">Vender</Link>
-        {user ? <><p>Hola, {user.name}!</p> <Button onClick={handleLogout}>Cerrar Sesión</Button></>: <Link to="/login" className="text-white">Iniciar sesión</Link>}
+        {user ? (
+          <>
+            <Link to={`/profile/${user.id}`} className="text-white underline">
+              Hola, {user.name}!
+            </Link>
+            <Button onClick={handleLogout}>Cerrar Sesión</Button>
+          </>
+        ) : (
+          <Link to="/login" className="text-white">Iniciar sesión</Link>
+        )}
         <Link to="/carrito" className="text-white flex items-center space-x-1">
           <ShoppingCart className="h-5 w-5" />
           <span>Carrito</span>

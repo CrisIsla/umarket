@@ -33,9 +33,9 @@ export function getProducts(
   return connectingWithServer<void, Product[]>({
     method: "get",
     url: "/api/products",
+    ...(page && limit ? { params: { page, limit } } : {}),
     successfulMessage: SUCCESSFULL_MESSAGES.GET_ALL,
     errorMessage: ERROR_MESSAGES.GET_ALL,
-    ...(page && limit ? { params: { page, limit } } : {}),
   });
 }
 
@@ -51,8 +51,28 @@ export function getProductById({ id }: Pick<Product, "id">) {
 export function deleteProductById({ id }: Pick<Product, "id">) {
   return connectingWithServer<void, Product>({
     method: "delete",
-    url: `api/products/${id}`,
+    url: `/api/products/${id}`,
     successfulMessage: SUCCESSFULL_MESSAGES.DELETE,
     errorMessage: ERROR_MESSAGES.DELETE,
+  });
+}
+
+export function getProductsBySellerId(sellerId: string) {
+  return connectingWithServer<void, Product[]>({
+    method: "get",
+    url: "/api/products",
+    params: { seller: sellerId },
+    successfulMessage: SUCCESSFULL_MESSAGES.GET_ALL,
+    errorMessage: ERROR_MESSAGES.GET_ALL,
+  });
+}
+
+export function updateProductById({ id, data }: { id: string; data: FormData }) {
+  return connectingWithServer<FormData, Product>({
+    method: "patch",
+    url: `/api/products/${id}`,
+    body: data,
+    successfulMessage: "Product updated successfully",
+    errorMessage: "Error updating product",
   });
 }
