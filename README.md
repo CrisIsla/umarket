@@ -55,6 +55,8 @@ Para manejar la autenticación, se utiliza JWT (JSON Web Tokens) para asegurar q
 
 ## Estado Global
 ### 1. Usuarios
+Para el manejo de la sesión se utilizó redux toolkit, se define el `store/store.ts`, luego en `store/auth/authSlice.ts` se definen las acciones y estados.
+En el archivo thunks se definen todas aquellas acciones asíncronas que llaman a los servicios. Se tiene checkingAuth para restaurar la sesión, startLogin que llama al inicio de la sesión y startLogout que cierra la misma.
 
 ### 2. Carrito de compras
 Uno de los estados globales utilizados es del carro de compras. Este es implementado utilizando zustand, definido en `store/cart.ts` en este archivo se definen las variables: 
@@ -138,3 +140,4 @@ Finalmente, se puede acceder a la aplicación desde el navegador con la URL de l
 ## URL de la aplicación
 
 http://fullstack.dcc.uchile.cl:7156
+
