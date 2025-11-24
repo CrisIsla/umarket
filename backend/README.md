@@ -5,7 +5,7 @@ Install dependencies
 ```
 Then, in .env
 ```bash
-PORT=3001
+PORT=7156
 MONGODB_URI=mongodb://127.0.0.1:27017/
 MONGODB_DBNAME=umarket
 ```
