@@ -51,11 +51,11 @@ export default function Header() {
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => (e.key === "Enter" ? handleSearch() : null)}
           />
-          <button type="button"
-            style={{ outline: "none", boxShadow: "none" }}
-            onClick={handleSearch}
-            className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
-            <Search className="h-5 w-5" />
+          <button type="button" 
+          style={{ outline: "none", boxShadow: "none" }}
+          onClick={handleSearch}
+          className="!outline-none !focus:outline-none !hover:outline-none !active:outline-none !border-none absolute right-1 text-gray-500 p-0">
+            <Search className="h-6 w-10 mt-2" />
           </button>
         </div>
       </div>
