@@ -1,52 +1,48 @@
-import axios from "axios";
 import axiosSecure from "../utils/axiosSecure";
 
-type Credentials = {
+export type Credentials = {
+  email: string;
+  password: string;
+};
+
+export type RegisterCredentials = {
+  username: string;
+  password: string;
+  contact: {
     email: string;
-    password: string;
+  };
 };
 
-type RegisterCredentials = { 
-    username: string;
-    password: string;
-    contact: { 
-        email: string; 
-    }
+export type AuthUser = {
+  id: string;
+  name: string;
+  email: string;
 };
 
-export const login = async (credentials: Credentials) => {
-    const response = await axios.post("api/auth/login", credentials);
-    const csrfToken = response.headers["x-csrf-token"];
-
-    if (csrfToken) {
-        localStorage.setItem("csrfToken", csrfToken);
-    }
-
-    return response.data;
+export const login = async (credentials: Credentials): Promise<AuthUser> => {
+  const response = await axiosSecure.post("/api/auth/login", credentials);
+  return response.data as AuthUser;
 };
 
+export const register = async (
+  credentials: RegisterCredentials
+): Promise<AuthUser> => {
+  const response = await axiosSecure.post("/api/auth/register", credentials);
+  return response.data as AuthUser;
+};
 
-export const register = async (credentials: RegisterCredentials) => {
-  const response = await axios.post("api/auth/register", credentials);
-  const csrfToken = response.headers["x-csrf-token"];
-
-  if (csrfToken) {
-    localStorage.setItem("csrfToken", csrfToken);
+export const restoreLogin = async (): Promise<{
+  data: AuthUser | null;
+  success: boolean;
+}> => {
+  try {
+    const response = await axiosSecure.get("/api/auth/me");
+    return { data: response.data as AuthUser, success: true };
+  } catch {
+    return { data: null, success: false };
   }
-
-  return response.data;
-}
-
-export const restoreLogin = async () => {
-    try {
-        const response = await axiosSecure.get("/api/auth/me");
-        return { data: response.data, success: true };
-    } catch {
-        return null;
-    }
 };
 
 export const logout = async () => {
-    await axiosSecure.post("/api/auth/logout");
-    localStorage.removeItem("csrfToken");
+  await axiosSecure.post("/api/auth/logout");
 };

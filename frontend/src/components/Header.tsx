@@ -2,14 +2,23 @@ import { ShoppingCart, Search } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { useCredentials } from "@/hooks/useCredentials";
+import { useCart } from "@/hooks/useCart";
 import { Button } from "./Button";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { startLogout } from "@/store/auth/thunks";
 
 export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, handleLogout } = useCredentials();
+  const { changeDisplayCart } = useCart()
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth.displayName
+    ? { name: auth.displayName, email: auth.email }
+    : auth.email
+      ? { name: auth.email, email: auth.email }
+      : null;
   const handleSearch = () => {
     if (searchTerm.trim() === "") return;
     if (location.pathname !== "/") {
@@ -24,7 +33,11 @@ export default function Header() {
     <header className="bg-[#031E3C] fixed top-0 left-0 w-screen text-white flex items-center justify-evenly shadow-md z-999999999">
       {/* Logo */}
       <Link to="/" className="flex items-center px-4 py-1">
-        <img src={logo} alt="Umarket Logo" className="max-h-15 w-auto rounded" />
+        <img
+          src={logo}
+          alt="Umarket Logo"
+          className="max-h-15 w-auto rounded"
+        />
       </Link>
 
       {/* Search bar */}
@@ -36,7 +49,7 @@ export default function Header() {
             className="w-full px-4 py-2 rounded-full text-black focus:outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' ? handleSearch() : null}
+            onKeyDown={(e) => (e.key === "Enter" ? handleSearch() : null)}
           />
           <button type="button" 
           style={{ outline: "none", boxShadow: "none" }}
@@ -49,12 +62,25 @@ export default function Header() {
 
       {/* Actions */}
       <nav className="flex items-center space-x-12 px-6 py-2">
-        <Link to="/new/product" className="text-white">Vender</Link>
-        {user ? <><p>Hola, {user.name}!</p> <Button onClick={handleLogout}>Cerrar Sesión</Button></>: <Link to="/login" className="text-white">Iniciar sesión</Link>}
-        <Link to="/carrito" className="text-white flex items-center space-x-1">
+        <Link to="/new/product" className="text-white">
+          Vender
+        </Link>
+        {user ? (
+          <>
+            <p>{user.name}</p>
+            <Button onClick={() => dispatch(startLogout())}>
+              Cerrar Sesión
+            </Button>
+          </>
+        ) : (
+          <Link to="/login" className="text-white">
+            Iniciar sesión
+          </Link>
+        )}
+        <Button onClick={changeDisplayCart} className="text-white flex items-center space-x-1">
           <ShoppingCart className="h-5 w-5" />
           <span>Carrito</span>
-        </Link>
+        </Button>
       </nav>
     </header>
   );

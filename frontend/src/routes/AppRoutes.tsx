@@ -4,16 +4,25 @@ import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import Home from "@/views/Home";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { LoginPage } from "@/pages/LoginPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { checkingAuthentication } from "@/store/auth/thunks";
 
 export const AppRoutes = () => {
-  const [csrfToken, setCsrfToken] = useState<string|null>(localStorage.getItem('csrfToken'));
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.auth.status);
 
   useEffect(() => {
-    if (!csrfToken) {
-      return;
-    }
-  }, [csrfToken])
+    dispatch(checkingAuthentication());
+  }, [dispatch]);
+
+  if (authStatus === "checking") {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <Routes>
@@ -24,7 +33,7 @@ export const AppRoutes = () => {
       <Route
         path="/new/*"
         element={
-          csrfToken ? (
+          authStatus === "authenticated" ? (
             <ProtectedRoutes />
           ) : (
             <Navigate to="/login" replace />
@@ -36,7 +45,7 @@ export const AppRoutes = () => {
       <Route
         path="/register"
         element={
-          csrfToken ? (
+          authStatus === "authenticated" ? (
             <Navigate to="/" replace />
           ) : (
             <RegisterPage />
@@ -46,10 +55,10 @@ export const AppRoutes = () => {
       <Route
         path="/login"
         element={
-          csrfToken ? (
+          authStatus === "authenticated" ? (
             <Navigate to="/" replace />
           ) : (
-            <LoginPage setCsrfToken={setCsrfToken}/>
+            <LoginPage />
           )
         }
       />
