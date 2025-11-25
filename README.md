@@ -126,8 +126,9 @@ scp -P 219 -r backend fullstack@fullstack.dcc.uchile.cl:umarket/
 En umarket/backend, se debe crear un archivo `.env` con las variables de entorno necesarias:
 ```bash
 PORT=7156
-MONGODB_URI=mongodb://127.0.0.1:27017/
-MONGODB_DBNAME=umarket
+MONGODB_URI=mongodb://fulls:fulls@fullstack.dcc.uchile.cl:27019/
+DB_NAME=fullstack
+JWT_SECRET=G5F8yNhHgXzheg6tyTspljspfEvkUuJufstknCENXaI=
 ```
 En la carpeta del backend, se deben instalar las dependencias y correr el servidor:
 ```bash
@@ -140,4 +141,5 @@ Finalmente, se puede acceder a la aplicación desde el navegador con la URL de l
 ## URL de la aplicación
 
 http://fullstack.dcc.uchile.cl:7156
+
 
